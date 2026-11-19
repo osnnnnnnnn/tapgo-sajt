@@ -1,0 +1,4737 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tapGo | NFC stalak za Google recenzije</title>
+<meta name="description" content="Personalizovani NFC stalci za kafiće, restorane, salone i druge lokale. Zatražite ponudu za svoj lokal.">
+<meta name="theme-color" content="#061d40">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sr_RS">
+<meta property="og:site_name" content="tapGo">
+<meta property="og:title" content="tapGo | NFC stalak za Google recenzije">
+<meta property="og:description" content="Personalizovani NFC stalci za kafiće, restorane, salone i druge lokale. Zatražite ponudu za svoj lokal.">
+<meta property="og:url" content="https://www.tapgo.rs/">
+<meta property="og:image" content="https://www.tapgo.rs/og-image.png">
+<link rel="canonical" href="https://www.tapgo.rs/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Manrope:wght@600..800&display=swap&subset=latin-ext" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/*
+  tapGo — tamna tema
+  Tamnoplava (#082754) je dominantna podloga, tirkiz naglašava akciju.
+  Bela se koristi samo za kartice gde je čitljivost ključna (forma, pregled slike).
+*/
+:root {
+  --navy-950: #041530;
+  --navy-900: #061d40;
+  --navy: #082754;
+  --navy-700: #0c3166;
+  --navy-600: #123d7a;
+  --teal: #009f83;
+  --teal-dark: #007a66;
+  --teal-bright: #2fd3b3;
+  --teal-ink: #04203f;
+
+  --ink: #eef3fa;
+  --ink-muted: #a9bad1;
+  --line: rgb(255 255 255 / 10%);
+  --line-strong: rgb(255 255 255 / 18%);
+  --card: rgb(255 255 255 / 4.5%);
+  --card-hover: rgb(255 255 255 / 7.5%);
+
+  /* svetle površine (forma, pregled) */
+  --paper: #ffffff;
+  --paper-tint: #f4f8f7;
+  --text: #132743;
+  --muted: #52647a;
+  --border: #dce7e5;
+
+  --font-head: "Manrope", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --header-h: 68px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --focus: 0 0 0 3px var(--navy-900), 0 0 0 5px var(--teal-bright);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+  background: var(--navy-900);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--navy);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  color: #fff;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+h2 {
+  font-size: clamp(1.75rem, 1.25rem + 1.9vw, 2.6rem);
+  font-weight: 800;
+}
+h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+p {
+  margin: 0 0 1em;
+}
+a {
+  color: var(--teal-bright);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: #7ff0d9;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: 6px;
+}
+main:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 12px;
+  color: var(--teal-ink);
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+@media (min-width: 720px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+/* ---------- Animacije ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.anim-in {
+  animation: fade-up 0.8s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Dugmad ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+.btn svg {
+  transition: transform 0.25s var(--ease);
+}
+.btn--primary {
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  box-shadow: 0 8px 24px -8px rgb(47 211 179 / 55%);
+}
+.btn--primary:hover {
+  background: #52e0c4;
+  color: var(--teal-ink);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -10px rgb(47 211 179 / 70%);
+}
+.btn--primary:hover svg {
+  transform: translateX(3px);
+}
+.btn--primary:disabled {
+  opacity: 0.7;
+  cursor: progress;
+  transform: none;
+}
+.btn--ghost {
+  background: rgb(255 255 255 / 4%);
+  color: #fff;
+  border-color: var(--line-strong);
+}
+.btn--ghost:hover {
+  background: rgb(255 255 255 / 9%);
+  border-color: rgb(255 255 255 / 40%);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.btn--sm {
+  min-height: 42px;
+  padding: 0 16px;
+  font-size: 0.95rem;
+}
+.btn--lg {
+  min-height: 54px;
+  padding: 0 26px;
+  font-size: 1.05rem;
+}
+.btn--block {
+  width: 100%;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--teal-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link-button:hover {
+  color: #7ff0d9;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+  color: #fff;
+  line-height: 1;
+}
+.logo__accent {
+  color: var(--teal-bright);
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgb(6 29 64 / 80%);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: var(--header-h);
+}
+.header__brand {
+  text-decoration: none;
+  padding: 4px 2px;
+}
+.header__nav {
+  display: none;
+  margin-left: auto;
+}
+.header__nav ul {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.header__nav a {
+  position: relative;
+  display: block;
+  padding: 8px 14px;
+  color: var(--ink-muted);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.2s;
+}
+.header__nav a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--teal-bright);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.header__nav a:hover {
+  color: #fff;
+}
+.header__nav a:hover::after {
+  transform: scaleX(1);
+}
+.header__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 4%);
+  color: #fff;
+  cursor: pointer;
+}
+.mobile-menu {
+  border-top: 1px solid var(--line);
+  background: var(--navy-900);
+  padding: 12px 0 20px;
+  box-shadow: 0 20px 30px rgb(0 0 0 / 30%);
+  animation: fade-up 0.35s var(--ease) both;
+}
+.mobile-menu[hidden] {
+  display: none;
+}
+.mobile-menu ul {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.mobile-menu a:not(.btn) {
+  display: block;
+  padding: 14px 4px;
+  color: #fff;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 420px) {
+  .header__actions .btn--sm {
+    padding: 0 12px;
+    font-size: 0.9rem;
+  }
+}
+@media (min-width: 1080px) {
+  .header__nav {
+    display: block;
+  }
+  .header__actions {
+    margin-left: 8px;
+  }
+  .header__toggle,
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* ---------- Sekcije ---------- */
+.section {
+  position: relative;
+  padding: 80px 0;
+}
+@media (min-width: 880px) {
+  .section {
+    padding: 112px 0;
+  }
+}
+.section--deep {
+  background: var(--navy-900);
+}
+.section__head {
+  max-width: 700px;
+  margin: 0 auto 52px;
+  text-align: center;
+}
+.section__head--left {
+  margin: 0 0 32px;
+  text-align: left;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--teal-bright);
+  margin: 0 0 14px;
+}
+.lead {
+  font-size: 1.18rem;
+  color: var(--ink-muted);
+  max-width: 34em;
+}
+.muted {
+  color: var(--ink-muted);
+}
+.note {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  margin: 40px 0 0;
+}
+.badge {
+  display: inline-block;
+  margin: 4px 0 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgb(47 211 179 / 10%);
+  border: 1px solid rgb(47 211 179 / 30%);
+  color: #bdf3e7;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ---------- Naslovna ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 0;
+  background: var(--navy);
+  isolation: isolate;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 50% at 80% 30%, rgb(0 159 131 / 28%), transparent 70%),
+    radial-gradient(45% 45% at 10% 90%, rgb(18 61 122 / 90%), transparent 70%),
+    var(--navy);
+}
+.hero__bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(70% 70% at 60% 40%, #000 30%, transparent 75%);
+}
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  right: -120px;
+  top: -140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(47 211 179 / 22%), transparent 65%);
+  animation: drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  to {
+    transform: translate(-80px, 90px) scale(1.15);
+  }
+}
+.hero__inner {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+  padding-bottom: 48px;
+}
+.hero__copy h1 {
+  max-width: 13em;
+}
+.hl {
+  background: linear-gradient(90deg, #fff, #bdf3e7 60%, var(--teal-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.pulse-dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--teal-bright);
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--teal-bright);
+  animation: ping 2s var(--ease) infinite;
+}
+@keyframes ping {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+@media (max-width: 479px) {
+  .hero__cta .btn {
+    width: 100%;
+  }
+}
+@media (min-width: 900px) {
+  .hero {
+    padding-top: 56px;
+  }
+  .hero__inner {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    padding-bottom: 72px;
+  }
+}
+
+/* Animirana ilustracija */
+.hv {
+  position: relative;
+  margin: 0;
+  max-width: 540px;
+  margin-inline: auto;
+}
+.hv__glow {
+  position: absolute;
+  inset: 12% 8% 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(47 211 179 / 25%), transparent 65%);
+  filter: blur(10px);
+}
+.hv__svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+}
+.hv figcaption {
+  position: relative;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+.hv__phone {
+  animation: phone 6.5s var(--ease) infinite;
+}
+@keyframes phone {
+  0%,
+  6% {
+    transform: translate(60px, 30px);
+  }
+  28%,
+  74% {
+    transform: translate(-58px, -6px);
+  }
+  92%,
+  100% {
+    transform: translate(60px, 30px);
+  }
+}
+.hv__wave {
+  fill: none;
+  stroke: var(--teal-bright);
+  stroke-width: 2.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 6.5s ease-out infinite;
+}
+.hv__wave--2 {
+  animation-delay: 0.35s;
+}
+.hv__wave--3 {
+  animation-delay: 0.7s;
+}
+@keyframes wave {
+  0%,
+  26% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  30% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+.hv__screen-open {
+  opacity: 0;
+  animation: screen 6.5s var(--ease) infinite;
+}
+@keyframes screen {
+  0%,
+  36% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  44%,
+  80% {
+    opacity: 1;
+    transform: none;
+  }
+  88%,
+  100% {
+    opacity: 0;
+  }
+}
+.hv__mark {
+  animation: mark 6.5s ease-in-out infinite;
+}
+@keyframes mark {
+  0%,
+  26%,
+  50%,
+  100% {
+    filter: none;
+  }
+  32% {
+    filter: drop-shadow(0 0 10px rgb(47 211 179 / 90%));
+  }
+}
+
+/* Traka sa tipovima lokala */
+.ticker {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgb(4 21 48 / 55%);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker 36s linear infinite;
+}
+.ticker__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ticker__list li {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.ticker__list li::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--teal-bright);
+  opacity: 0.7;
+}
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Kako radi ---------- */
+.how {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+.how__media {
+  margin: 0;
+  max-width: 440px;
+  margin-inline: auto;
+  width: 100%;
+}
+.how__media img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 60%);
+}
+.how__media figcaption {
+  margin-top: 10px;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+.steps {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  column-gap: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 22px;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+.step:hover {
+  background: var(--card-hover);
+  border-color: rgb(47 211 179 / 35%);
+}
+.step__icon {
+  grid-row: span 2;
+  display: inline-flex;
+  width: 56px;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgb(47 211 179 / 12%);
+  color: var(--teal-bright);
+}
+.step__icon svg {
+  width: 30px;
+  height: 30px;
+}
+.step__num {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: rgb(255 255 255 / 10%);
+}
+.step h3 {
+  margin: 4px 40px 4px 0;
+}
+.step p {
+  color: var(--ink-muted);
+  margin: 0;
+}
+@media (min-width: 960px) {
+  .how {
+    grid-template-columns: 420px 1fr;
+    gap: 56px;
+  }
+}
+
+/* ---------- Koristi ---------- */
+.split {
+  display: grid;
+  gap: 8px;
+}
+.benefits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.benefit {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.benefit__mark {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}
+.benefit h3 {
+  margin-bottom: 4px;
+}
+.benefit p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+@media (min-width: 880px) {
+  .split {
+    grid-template-columns: 1fr 1.25fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .split .section__head {
+    position: sticky;
+    top: calc(var(--header-h) + 40px);
+  }
+}
+
+/* ---------- Primeri ---------- */
+.examples {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 24px;
+}
+.example-card {
+  background: var(--navy-700);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.4s var(--ease),
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+.example-card:hover {
+  border-color: rgb(47 211 179 / 40%);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 70%);
+}
+.example-card__media {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: var(--navy-600);
+  cursor: zoom-in;
+  border-radius: 0;
+  overflow: hidden;
+}
+.example-card__media img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.7s var(--ease);
+}
+.example-card:hover .example-card__media img {
+  transform: scale(1.035);
+}
+.example-card__media:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--teal-bright);
+  border-radius: 0;
+}
+.example-card__body {
+  padding: 20px 22px 22px;
+}
+.example-card__body h3 {
+  margin-bottom: 4px;
+}
+.example-card__body p {
+  color: var(--ink-muted);
+  margin: 0 0 10px;
+}
+@media (min-width: 720px) {
+  .examples {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .examples {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Pregled fotografije */
+.lightbox {
+  width: min(960px, 96vw);
+  max-height: 94vh;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--navy-900);
+  color: var(--ink);
+}
+.lightbox[open] {
+  animation: pop 0.35s var(--ease) both;
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+.lightbox::backdrop {
+  background: rgb(4 21 48 / 82%);
+  backdrop-filter: blur(4px);
+}
+.lightbox__figure {
+  margin: 0;
+}
+.lightbox__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 12px 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.lightbox__bar h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.lightbox__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 5%);
+  color: #fff;
+  cursor: pointer;
+}
+.lightbox__img {
+  width: 100%;
+  height: auto;
+  max-height: calc(94vh - 130px);
+  object-fit: contain;
+  background: var(--navy-950);
+}
+.lightbox figcaption {
+  padding: 12px 20px 16px;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Ponuda ---------- */
+.offer {
+  display: grid;
+  gap: 40px;
+}
+.offer__kit {
+  margin: 28px 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.offer__kit ul {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.offer__kit li {
+  position: relative;
+  padding-left: 26px;
+}
+.offer__kit li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--teal-bright);
+}
+.offer__kit .muted {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.offer__flow {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--navy-600), var(--navy-900));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+}
+.offer__flow::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -100px;
+  top: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(47 211 179 / 25%), transparent 65%);
+}
+.offer__flow h3 {
+  position: relative;
+  margin-bottom: 26px;
+}
+.flow {
+  position: relative;
+  list-style: none;
+  counter-reset: flow;
+  margin: 0;
+  padding: 0;
+}
+.flow li {
+  counter-increment: flow;
+  position: relative;
+  padding: 0 0 26px 52px;
+  color: #fff;
+  font-weight: 500;
+}
+.flow li::before {
+  content: counter(flow);
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.flow li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 32px;
+  bottom: 2px;
+  width: 2px;
+  background: linear-gradient(var(--teal-bright), rgb(255 255 255 / 12%));
+  transform-origin: top;
+}
+.flow li:last-child {
+  padding-bottom: 0;
+}
+.js [data-reveal] .flow li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
+  transition-delay: calc(250ms + var(--i, 0) * 120ms);
+}
+.js [data-reveal] .flow li::after {
+  transform: scaleY(0);
+  transition: transform 0.6s var(--ease);
+  transition-delay: calc(400ms + var(--i, 0) * 120ms);
+}
+.js [data-reveal].is-in .flow li {
+  opacity: 1;
+  transform: none;
+}
+.js [data-reveal].is-in .flow li::after {
+  transform: none;
+}
+@media (min-width: 880px) {
+  .offer {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .offer__flow {
+    padding: 40px;
+  }
+  .offer__side {
+    margin-top: 40px;
+  }
+}
+
+/* ---------- Česta pitanja ---------- */
+.faq-wrap {
+  display: grid;
+  gap: 8px;
+}
+.faq {
+  display: grid;
+  gap: 12px;
+}
+.faq__item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition:
+    background-color 0.25s,
+    border-color 0.25s;
+}
+.faq__item:hover,
+.faq__item[open] {
+  background: var(--card-hover);
+}
+.faq__item[open] {
+  border-color: rgb(47 211 179 / 35%);
+}
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius);
+}
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+.faq__item summary h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.faq__item summary svg {
+  flex: 0 0 auto;
+  color: var(--teal-bright);
+  transition: transform 0.3s var(--ease);
+}
+.faq__item[open] summary svg {
+  transform: rotate(180deg);
+}
+.faq__item p {
+  margin: 0;
+  padding: 0 20px 20px;
+  color: var(--ink-muted);
+}
+.faq__item[open] p {
+  animation: fade-up 0.4s var(--ease) both;
+}
+@media (min-width: 880px) {
+  .faq-wrap {
+    grid-template-columns: 1fr 1.6fr;
+    gap: 64px;
+    align-items: start;
+  }
+}
+
+/* ---------- Kontakt ---------- */
+.contact {
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(50% 60% at 15% 20%, rgb(0 159 131 / 22%), transparent 70%),
+    radial-gradient(50% 60% at 95% 100%, rgb(18 61 122 / 90%), transparent 70%),
+    var(--navy);
+}
+.contact__inner {
+  display: grid;
+  gap: 40px;
+}
+.contact__intro > p {
+  font-size: 1.12rem;
+  color: var(--ink-muted);
+  max-width: 30em;
+}
+.contact__direct {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.contact__direct li {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  max-width: 360px;
+}
+.contact__direct span {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+.contact__direct a {
+  color: #fff;
+  font-weight: 600;
+  word-break: break-word;
+}
+.contact__direct a:hover {
+  color: var(--teal-bright);
+}
+.contact__card {
+  background: var(--paper);
+  color: var(--text);
+  border-radius: var(--radius-lg);
+  padding: 28px 22px;
+  box-shadow:
+    0 40px 80px -30px rgb(0 0 0 / 60%),
+    0 0 0 1px rgb(255 255 255 / 10%);
+}
+.contact__card h3 {
+  color: var(--text);
+}
+.contact__card a {
+  color: var(--teal-dark);
+}
+.contact__card :focus-visible {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--teal-dark);
+}
+.contact__card .btn--primary {
+  background: var(--teal-dark);
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgb(0 122 102 / 60%);
+}
+.contact__card .btn--primary:hover {
+  background: #00604f;
+  color: #fff;
+}
+.contact__fallback h3 {
+  font-size: 1.35rem;
+}
+.contact__fallback p {
+  color: var(--muted);
+}
+.contact__fallback .muted {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+}
+@media (min-width: 720px) {
+  .contact__card {
+    padding: 36px;
+  }
+}
+@media (min-width: 960px) {
+  .contact__inner {
+    grid-template-columns: 1fr 1.25fr;
+    gap: 64px;
+    align-items: start;
+  }
+}
+
+/* ---------- Forma (na beloj kartici) ---------- */
+.form {
+  display: grid;
+  gap: 18px;
+}
+.form__grid {
+  display: grid;
+  gap: 18px;
+}
+@media (min-width: 560px) {
+  .form__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.form__group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.form__group legend {
+  font-weight: 600;
+  color: var(--text);
+  padding: 0;
+  margin-bottom: 2px;
+}
+.form__group > .field__hint {
+  margin-bottom: 10px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.field label {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.field__opt {
+  font-weight: 400;
+  color: var(--muted);
+}
+.field__hint {
+  margin: -2px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.field input,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--text);
+  background: #fff;
+  border: 1.5px solid #c5d4d1;
+  border-radius: 10px;
+  padding: 12px 14px;
+  min-height: 48px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+.field input:hover,
+.field textarea:hover {
+  border-color: var(--muted);
+}
+.field input:focus-visible,
+.field textarea:focus-visible {
+  border-color: var(--teal-dark);
+  border-radius: 10px;
+}
+.field--error input,
+.field--error textarea {
+  border-color: #b42318;
+}
+.field__error {
+  margin: 0;
+  color: #b42318;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.form__group > .field__error {
+  margin-top: 8px;
+}
+.form .btn {
+  justify-self: start;
+}
+@media (max-width: 559px) {
+  .form .btn {
+    width: 100%;
+  }
+}
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form-error {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  color: #7a271a;
+}
+.form-error p {
+  margin: 0;
+}
+.form-error p + p {
+  margin-top: 6px;
+}
+.form-error a {
+  color: #7a271a !important;
+  font-weight: 600;
+}
+.form-success {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 12px;
+  background: #e3f4f0;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 1.1rem;
+  animation: fade-up 0.5s var(--ease) both;
+}
+.form-success svg {
+  flex: 0 0 auto;
+}
+.form-success p {
+  margin: 0;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  background: var(--navy-950);
+  color: var(--ink-muted);
+  padding: 52px 0 28px;
+  border-top: 1px solid var(--line);
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.footer__slogan {
+  margin: 10px 0 0;
+}
+.footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.footer a {
+  color: #fff;
+}
+.footer a:hover {
+  color: var(--teal-bright);
+}
+.footer__legal {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+.footer__legal p {
+  margin: 0;
+}
+
+/* ---------- Tekstualne strane ---------- */
+.prose {
+  max-width: 760px;
+}
+.prose h2 {
+  font-size: 1.35rem;
+  margin-top: 1.8em;
+}
+.prose p {
+  color: var(--ink-muted);
+}
+.prose .badge {
+  margin-bottom: 16px;
+}
+
+/* ---------- Smanjeno kretanje ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .hv__screen-open {
+    opacity: 1;
+  }
+  .ticker__track {
+    animation: none;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+
+/* =========================================================
+   NOVE SEKCIJE: zašto, kako radi, prednosti, NFC ili QR
+   ========================================================= */
+.lead--center {
+  margin-inline: auto;
+}
+
+/* Telefon (zajednički okvir) */
+.ph {
+  position: relative;
+  width: 250px;
+  aspect-ratio: 9 / 18.5;
+  border-radius: 38px;
+  background: #0b1426;
+  padding: 10px;
+  box-shadow:
+    0 0 0 1.5px rgb(255 255 255 / 14%),
+    0 40px 80px -30px rgb(0 0 0 / 70%);
+}
+.ph::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  width: 70px;
+  height: 18px;
+  margin-left: -35px;
+  border-radius: 10px;
+  background: #0b1426;
+  z-index: 3;
+}
+.ph__screen {
+  position: relative;
+  height: 100%;
+  border-radius: 29px;
+  overflow: hidden;
+  background: linear-gradient(170deg, #1d4f8f, #0b2c5e 55%, #0a2550);
+}
+.ph__screen--light {
+  background: #f4f8f7;
+}
+.ph--mini {
+  width: 150px;
+  border-radius: 26px;
+  padding: 7px;
+}
+.ph--mini::before {
+  top: 12px;
+  width: 44px;
+  height: 11px;
+  margin-left: -22px;
+}
+.ph--mini .ph__screen {
+  border-radius: 20px;
+}
+
+/* ---------- Zašto: Google izlog ---------- */
+.why {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+.why__points {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.why__points li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--ink-muted);
+}
+.why__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--teal-bright);
+  box-shadow: 0 0 0 4px rgb(47 211 179 / 15%);
+}
+.why__points strong {
+  color: #fff;
+}
+.search-demo {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+.search-demo figcaption {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  text-align: center;
+  max-width: 300px;
+}
+.search-demo .ph {
+  width: 270px;
+}
+.sd__bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 44px 12px 0;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(8 39 84 / 15%);
+  font-size: 13px;
+  color: var(--text);
+}
+.sd__bar svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.sd__typed {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--teal-dark);
+  width: 15ch;
+}
+.sd__map {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 55%;
+  background:
+    linear-gradient(115deg, transparent 46%, #fff 46% 49%, transparent 49%),
+    linear-gradient(20deg, transparent 60%, #fff 60% 62.5%, transparent 62.5%),
+    linear-gradient(160deg, transparent 30%, #dcebe5 30% 40%, transparent 40%),
+    #e7eef0;
+}
+.sd__pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  color: #fff;
+  font: 800 12px/1 var(--font-head);
+  box-shadow: 0 4px 10px rgb(0 0 0 / 25%);
+}
+.sd__pin--a {
+  left: 58%;
+  top: 46%;
+  background: #d93025;
+}
+.sd__pin--b {
+  left: 24%;
+  top: 62%;
+  background: #8a99a8;
+}
+.sd__pin {
+  font-size: 0;
+}
+.sd__card {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  padding: 11px 12px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgb(8 39 84 / 14%);
+  color: var(--text);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.sd__card--a {
+  bottom: 96px;
+  outline: 2px solid transparent;
+}
+.sd__card--b {
+  bottom: 12px;
+  opacity: 0.92;
+}
+.sd__name {
+  display: flex;
+  justify-content: space-between;
+  font: 800 13.5px/1.3 var(--font-head);
+  color: var(--navy);
+}
+.sd__open {
+  font: 600 10px/1.6 var(--font-body);
+  color: #188038;
+}
+.sd__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0;
+  color: var(--muted);
+}
+.sd__rating b {
+  color: var(--text);
+}
+.sd__stars {
+  color: #f4b400;
+  letter-spacing: -1px;
+}
+.sd__rev {
+  color: var(--muted);
+}
+.sd__pick {
+  position: absolute;
+  right: 10px;
+  top: -12px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--teal-dark);
+  color: #fff;
+  font: 700 10px/1.4 var(--font-body);
+  opacity: 0;
+}
+.search-demo.is-in .sd__typed {
+  animation: typing 1.6s steps(15) 0.4s both;
+}
+.search-demo.is-in .sd__card--a {
+  animation:
+    card-in 0.6s var(--ease) 2.1s both,
+    card-pick 4s ease 3.2s infinite;
+}
+.search-demo.is-in .sd__card--b {
+  animation: card-in 0.6s var(--ease) 2.35s both;
+}
+.search-demo.is-in .sd__pick {
+  animation: fade-up 0.5s var(--ease) 3.2s both;
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 15ch;
+  }
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes card-pick {
+  0%,
+  100% {
+    outline-color: transparent;
+  }
+  15%,
+  60% {
+    outline-color: var(--teal-bright);
+  }
+}
+
+.stats {
+  list-style: none;
+  margin: 64px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.stat {
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.stat__num {
+  display: block;
+  font: 800 clamp(2.4rem, 2rem + 1.5vw, 3.2rem) / 1 var(--font-head);
+  color: var(--teal-bright);
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.stat p {
+  margin: 0 0 12px;
+  color: #fff;
+  font-weight: 500;
+}
+.stat__src {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+.sources {
+  margin-top: 18px;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+.sources summary {
+  cursor: pointer;
+  width: fit-content;
+  color: var(--ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sources p {
+  margin: 10px 0 6px;
+}
+.sources ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+.sources a {
+  color: var(--ink-muted);
+}
+@media (min-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 960px) {
+  .why {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+  }
+}
+
+/* ---------- Kako radi: bez / sa tapGo ---------- */
+.paths {
+  display: grid;
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 56px;
+}
+.path {
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.path__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font: 800 1.1rem/1.2 var(--font-head);
+}
+.path__label svg {
+  width: 26px;
+  height: 26px;
+}
+.path ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: p;
+  display: grid;
+  gap: 8px;
+}
+.path li {
+  counter-increment: p;
+  position: relative;
+  padding: 9px 12px 9px 44px;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 4%);
+}
+.path li::before {
+  content: counter(p);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  translate: 0 -50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 800 0.8rem/1 var(--font-head);
+}
+.path__foot {
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+}
+.path--old .path__label {
+  color: #ff9b8f;
+}
+.path--old li {
+  color: var(--ink-muted);
+}
+.path--old li::before {
+  background: rgb(255 155 143 / 15%);
+  color: #ff9b8f;
+}
+.path--new {
+  border-color: rgb(47 211 179 / 45%);
+  background: linear-gradient(160deg, rgb(47 211 179 / 12%), rgb(47 211 179 / 3%));
+}
+.path--new .path__label {
+  color: var(--teal-bright);
+}
+.path--new li {
+  color: #fff;
+  font-weight: 600;
+}
+.path--new li::before {
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+}
+.path__big {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 18px 0 0;
+  font: 700 1.05rem/1.2 var(--font-head);
+  color: #fff;
+}
+.path__big span {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--teal-bright);
+}
+.path__vs {
+  display: grid;
+  place-items: center;
+  font: 800 1.6rem/1 var(--font-head);
+  color: var(--teal-bright);
+  rotate: 90deg;
+}
+.js .paths[data-reveal] .path--old li {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    opacity 0.4s var(--ease),
+    transform 0.4s var(--ease);
+}
+.js .paths[data-reveal].is-in .path--old li {
+  opacity: 1;
+  transform: none;
+}
+.js .paths[data-reveal].is-in .path--old li:nth-child(2) { transition-delay: 0.12s; }
+.js .paths[data-reveal].is-in .path--old li:nth-child(3) { transition-delay: 0.24s; }
+.js .paths[data-reveal].is-in .path--old li:nth-child(4) { transition-delay: 0.36s; }
+.js .paths[data-reveal].is-in .path--old li:nth-child(5) { transition-delay: 0.48s; }
+@media (min-width: 820px) {
+  .paths {
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .path__big {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 18px 0 0;
+  font: 700 1.05rem/1.2 var(--font-head);
+  color: #fff;
+}
+.path__big span {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--teal-bright);
+}
+.path__vs {
+    rotate: none;
+  }
+}
+
+/* Demo: telefon i stalak */
+.demo {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+.demo__stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+  min-height: 520px;
+  padding-top: 10px;
+}
+.demo__stand {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 150px;
+  height: 210px;
+  margin-right: 36px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  padding: 7px;
+  background: linear-gradient(135deg, rgb(255 255 255 / 55%), rgb(255 255 255 / 12%) 50%, rgb(255 255 255 / 30%));
+  border: 1.5px solid rgb(255 255 255 / 60%);
+  transform: perspective(600px) rotateY(18deg) rotateX(4deg);
+  box-shadow: 0 30px 40px -20px rgb(0 0 0 / 60%);
+}
+.demo__insert {
+  height: 100%;
+  border-radius: 6px;
+  background: #f3eadb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 8px;
+  gap: 8px;
+  color: #3a2a22;
+  text-align: center;
+}
+.demo__brand {
+  font: 800 14px/1.1 var(--font-head);
+  color: #b5553b;
+}
+.demo__q {
+  font: 700 12px/1.2 var(--font-head);
+}
+.demo__nfc {
+  margin-top: auto;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #b5553b;
+  color: #b5553b;
+}
+.demo__nfc svg {
+  width: 28px;
+  height: 28px;
+}
+.demo__waves {
+  position: absolute;
+  left: 50%;
+  bottom: 38px;
+  width: 54px;
+  height: 54px;
+  margin-left: -27px;
+  pointer-events: none;
+}
+.demo__waves i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--teal-bright);
+  opacity: 0;
+}
+.demo[data-step="1"] .demo__waves i {
+  animation: ring 1.6s ease-out infinite;
+}
+.demo[data-step="1"] .demo__waves i:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.demo[data-step="1"] .demo__waves i:nth-child(3) {
+  animation-delay: 0.8s;
+}
+@keyframes ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+.demo__phone {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.9s var(--ease);
+  transform: translate(0, 0) rotate(0deg);
+}
+.demo[data-step="1"] .demo__phone {
+  transform: translate(-92px, -10px) rotate(-10deg);
+}
+
+/* ekrani */
+.scr {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 58px 16px 18px;
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+  color: #fff;
+}
+.scr--light {
+  background: #fff;
+  color: var(--text);
+}
+.demo[data-step="1"] .scr-1,
+.demo[data-step="2"] .scr-2,
+.demo[data-step="3"] .scr-3,
+.demo[data-step="4"] .scr-4 {
+  opacity: 1;
+  transform: none;
+}
+.lock__time {
+  font: 700 54px/1 var(--font-head);
+  letter-spacing: -0.02em;
+  margin-top: 18px;
+}
+.lock__date {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 6px;
+}
+.lock__hint {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 14%);
+  font-size: 12px;
+}
+.lock__hint svg {
+  width: 16px;
+  height: 16px;
+}
+.notif {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 26px;
+  padding: 11px 12px;
+  border-radius: 18px;
+  background: rgb(255 255 255 / 88%);
+  color: var(--text);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+}
+.demo[data-step="2"] .notif {
+  animation: drop 0.6s var(--ease) 0.15s both;
+}
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+.notif__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #fff;
+  border: 1px solid var(--border);
+  font: 800 16px/1 var(--font-head);
+  color: #4285f4;
+}
+.notif__text {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1.3;
+}
+.notif__text span {
+  color: var(--muted);
+}
+.notif__tap {
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  border-radius: 50%;
+  background: rgb(0 122 102 / 35%);
+  opacity: 0;
+}
+.demo[data-step="2"] .notif__tap {
+  animation: tap 0.7s ease 1.3s both;
+}
+@keyframes tap {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+.rf__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.rf__head small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+.rf__avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #b5553b;
+  color: #fff;
+  font: 800 12px/1 var(--font-head);
+}
+.rf__stars {
+  display: flex;
+  gap: 4px;
+  margin: 22px 0 16px;
+  font-size: 30px;
+  line-height: 1;
+}
+.rf__stars i {
+  font-style: normal;
+  color: #d5dde3;
+}
+.demo[data-step="3"] .rf__stars i {
+  animation: star 0.3s ease both;
+}
+.demo[data-step="3"] .rf__stars i:nth-child(1) { animation-delay: 0.3s; }
+.demo[data-step="3"] .rf__stars i:nth-child(2) { animation-delay: 0.45s; }
+.demo[data-step="3"] .rf__stars i:nth-child(3) { animation-delay: 0.6s; }
+.demo[data-step="3"] .rf__stars i:nth-child(4) { animation-delay: 0.75s; }
+.demo[data-step="3"] .rf__stars i:nth-child(5) { animation-delay: 0.9s; }
+@keyframes star {
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    color: #f4b400;
+    transform: none;
+  }
+}
+.rf__box {
+  width: 100%;
+  min-height: 92px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-align: left;
+}
+.rf__typed {
+  display: block;
+  opacity: 0;
+}
+.rf__typed::after {
+  content: "";
+  display: inline-block;
+  width: 1.5px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: var(--teal-dark);
+  animation: caret 0.9s steps(1) infinite;
+}
+.demo[data-step="3"] .rf__typed,
+.demo[data-step="4"] .rf__typed {
+  animation: fade-up 0.7s var(--ease) 1.2s both;
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.rf__btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 11px;
+  border-radius: 999px;
+  background: #1a73e8;
+  color: #fff;
+  text-align: center;
+  font: 700 13px/1 var(--font-body);
+}
+.ok__check {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin-top: 26px;
+  border-radius: 50%;
+  background: #188038;
+}
+.demo[data-step="4"] .ok__check {
+  animation: pop 0.5s var(--ease) 0.15s both;
+}
+.ok__check svg {
+  width: 38px;
+  height: 38px;
+}
+.ok__title {
+  margin-top: 16px;
+  font: 800 22px/1.1 var(--font-head);
+  color: var(--navy);
+}
+.ok__sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+.ok__card {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--paper-tint);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.rf__mini {
+  color: #f4b400;
+  letter-spacing: -1px;
+}
+
+/* koraci uz demo */
+.demo__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.demo__steps button {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 18px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    color 0.3s;
+}
+.demo__steps b {
+  color: #fff;
+}
+.ds__n {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 7%);
+  font: 800 1rem/1 var(--font-head);
+  color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+.ds__bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: var(--teal-bright);
+}
+.demo__steps button[aria-current="step"] {
+  background: rgb(47 211 179 / 10%);
+  border-color: rgb(47 211 179 / 45%);
+  color: #dfe8f3;
+}
+.demo__steps button[aria-current="step"] .ds__n {
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+}
+.demo.is-playing .demo__steps button[aria-current="step"] .ds__bar {
+  animation: progress var(--step-ms, 3200ms) linear both;
+}
+@keyframes progress {
+  to {
+    width: 100%;
+  }
+}
+@media (min-width: 960px) {
+  .demo {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+}
+@media (max-width: 520px) {
+  .demo__stage {
+    min-height: 470px;
+    transform: scale(0.84);
+    transform-origin: top center;
+    margin-bottom: -70px;
+  }
+  .demo__stand {
+    width: 120px;
+    height: 170px;
+    margin-right: 14px;
+  }
+  .demo[data-step="1"] .demo__phone {
+    transform: translate(-60px, -8px) rotate(-10deg);
+  }
+}
+
+/* ---------- Prednosti ---------- */
+.gains {
+  display: grid;
+  gap: 20px;
+}
+.gain {
+  padding: 28px 26px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.gain--owner {
+  background: linear-gradient(160deg, rgb(47 211 179 / 10%), rgb(255 255 255 / 3%));
+  border-color: rgb(47 211 179 / 30%);
+}
+.gain h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.3rem;
+  margin-bottom: 18px;
+}
+.gain__h-next {
+  margin-top: 26px;
+}
+.gain__ico {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgb(47 211 179 / 14%);
+  color: var(--teal-bright);
+  flex: none;
+}
+.gain__ico svg {
+  width: 22px;
+  height: 22px;
+}
+.gain ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.gain li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--ink-muted);
+}
+.gain li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.35em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='%2304203f' stroke-width='3.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      center / 11px no-repeat,
+    var(--teal-bright);
+}
+.gain li b {
+  color: #fff;
+}
+@media (min-width: 900px) {
+  .gains {
+    grid-template-columns: 1.25fr 1fr;
+  }
+}
+
+.loop {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  margin-top: 64px;
+  padding: 32px 26px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, var(--navy-600), var(--navy-900));
+  border: 1px solid var(--line);
+}
+.loop__art {
+  width: min(300px, 80%);
+  margin-inline: auto;
+}
+.loop__art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.loop__arc {
+  transform-origin: 150px 150px;
+  animation: spin 6s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loop__nodes circle {
+  fill: var(--navy-900);
+  stroke: var(--teal-bright);
+  stroke-width: 2.5;
+}
+.loop__nodes text {
+  fill: #fff;
+  font: 800 20px var(--font-head);
+  text-anchor: middle;
+}
+.loop__center {
+  fill: #fff;
+  font: 800 22px var(--font-head);
+  text-anchor: middle;
+}
+.loop__center--sm {
+  fill: var(--ink-muted);
+  font: 500 13px var(--font-body);
+}
+.loop__text h3 {
+  font-size: 1.35rem;
+}
+.loop__text ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: l;
+  display: grid;
+  gap: 12px;
+}
+.loop__text li {
+  counter-increment: l;
+  position: relative;
+  padding-left: 42px;
+  color: var(--ink-muted);
+}
+.loop__text li::before {
+  content: counter(l);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--teal-bright);
+  color: #fff;
+  font: 800 0.85rem/1 var(--font-head);
+}
+.loop__text li b {
+  color: #fff;
+}
+@media (min-width: 860px) {
+  .loop {
+    grid-template-columns: 300px 1fr;
+    gap: 56px;
+    padding: 44px;
+  }
+}
+
+/* ---------- NFC ili QR ---------- */
+.duel {
+  display: grid;
+  gap: 20px;
+}
+.duel__card {
+  position: relative;
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.duel__card--nfc {
+  border-color: rgb(47 211 179 / 50%);
+  background: linear-gradient(160deg, rgb(47 211 179 / 14%), rgb(47 211 179 / 3%));
+}
+.duel__badge {
+  position: absolute;
+  z-index: 2;
+  top: -13px;
+  right: 22px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  font: 800 0.8rem/1.4 var(--font-head);
+}
+.duel__art {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 250px;
+  margin-bottom: 18px;
+  border-radius: var(--radius);
+  background: rgb(4 21 48 / 55%);
+  overflow: hidden;
+}
+.duel__art .ph--mini {
+  margin-bottom: -60px;
+}
+.duel__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: d;
+  display: grid;
+  gap: 8px;
+}
+.duel__steps li {
+  counter-increment: d;
+  position: relative;
+  padding-left: 36px;
+  color: var(--ink-muted);
+}
+.duel__steps li::before {
+  content: counter(d);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 800 0.75rem/1 var(--font-head);
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+}
+.duel__card--nfc .duel__steps li {
+  color: #fff;
+  font-weight: 600;
+}
+.duel__card--nfc .duel__steps li::before {
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+}
+/* QR kamera */
+.ph__screen--cam {
+  background: #1b1f27;
+}
+.cam__view {
+  position: absolute;
+  inset: 34px 10px 50px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  background: radial-gradient(circle at 30% 20%, rgb(255 255 255 / 25%), transparent 40%), #3a3f48;
+}
+.qr-art {
+  width: 82px;
+  height: 82px;
+  animation: wobble 2.4s ease-in-out infinite;
+}
+@keyframes wobble {
+  0%,
+  100% {
+    transform: translate(-6px, 4px) rotate(-6deg) scale(0.92);
+    filter: blur(1.6px);
+  }
+  50% {
+    transform: translate(5px, -3px) rotate(4deg) scale(1);
+    filter: blur(0.6px);
+  }
+}
+.cam__frame {
+  position: absolute;
+  inset: 22% 14%;
+  border: 2px dashed rgb(255 255 255 / 70%);
+  border-radius: 8px;
+}
+.cam__scan {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  height: 2px;
+  background: #ffd54f;
+  box-shadow: 0 0 10px #ffd54f;
+  animation: scan 1.8s ease-in-out infinite alternate;
+}
+@keyframes scan {
+  from {
+    top: 24%;
+  }
+  to {
+    top: 76%;
+  }
+}
+.cam__hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 64%;
+  text-align: center;
+  font-size: 10px;
+  color: #ffd54f;
+}
+/* NFC mini */
+.mini-stand {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 88px;
+  height: 122px;
+  margin-left: -88px;
+  border-radius: 7px;
+  background: #f3eadb;
+  border: 4px solid rgb(255 255 255 / 55%);
+  display: grid;
+  place-items: center;
+  transform: perspective(400px) rotateY(16deg);
+}
+.mini-stand__nfc {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #b5553b;
+  color: #b5553b;
+}
+.mini-stand__nfc svg {
+  width: 24px;
+  height: 24px;
+}
+.mini-stand i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  border: 2px solid var(--teal-bright);
+  opacity: 0;
+  animation: ring 2.4s ease-out infinite;
+}
+.mini-stand i:nth-of-type(2) {
+  animation-delay: 0.5s;
+}
+.ph--tap {
+  position: absolute;
+  left: 50%;
+  bottom: -60px;
+  margin: 0 !important;
+  animation: tapmove 2.4s var(--ease) infinite;
+}
+@keyframes tapmove {
+  0%,
+  100% {
+    transform: translate(10px, 10px) rotate(8deg);
+  }
+  40%,
+  70% {
+    transform: translate(-60px, -10px) rotate(-6deg);
+  }
+}
+.tap__ok {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  margin-left: -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #188038;
+  color: #fff;
+  font-weight: 800;
+  opacity: 0;
+  animation: okflash 2.4s ease infinite;
+}
+@keyframes okflash {
+  0%,
+  42% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  50%,
+  72% {
+    opacity: 1;
+    transform: none;
+  }
+  85%,
+  100% {
+    opacity: 0;
+  }
+}
+@media (min-width: 760px) {
+  .duel {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.compare-wrap {
+  margin-top: 28px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.97rem;
+}
+.compare th,
+.compare td {
+  padding: 15px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+.compare tbody tr:last-child th,
+.compare tbody tr:last-child td {
+  border-bottom: 0;
+}
+.compare thead th {
+  font: 800 1rem/1.2 var(--font-head);
+  color: #fff;
+  background: rgb(255 255 255 / 4%);
+}
+.compare tbody th {
+  color: #fff;
+  font-weight: 600;
+  width: 22%;
+}
+.compare td {
+  color: var(--ink-muted);
+}
+.compare .is-nfc {
+  background: rgb(47 211 179 / 8%);
+  color: #e7fbf6;
+}
+.compare thead .is-nfc {
+  color: var(--teal-bright);
+}
+@media (max-width: 680px) {
+  .compare thead {
+    display: none;
+  }
+  .compare tr {
+    display: grid;
+    border-bottom: 1px solid var(--line);
+  }
+  .compare tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .compare th,
+  .compare td {
+    border: 0;
+    width: auto !important;
+    padding: 8px 16px;
+  }
+  .compare tbody th {
+    padding-top: 16px;
+  }
+  .compare td::before {
+    content: attr(data-l);
+    display: block;
+    font: 700 0.78rem/1.4 var(--font-head);
+    color: var(--ink-muted);
+    opacity: 0.8;
+  }
+  .compare td.is-nfc::before {
+    color: var(--teal-bright);
+    opacity: 1;
+  }
+  .compare td:last-child {
+    padding-bottom: 16px;
+  }
+}
+
+.best {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  margin-top: 28px;
+  padding: 24px 26px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, rgb(47 211 179 / 18%), rgb(47 211 179 / 5%));
+  border: 1px solid rgb(47 211 179 / 45%);
+}
+.best__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+}
+.best__icon svg {
+  width: 26px;
+  height: 26px;
+}
+.best h3 {
+  margin-bottom: 6px;
+}
+.best p {
+  margin: 0;
+  color: #dfe8f3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd__typed {
+    width: 15ch !important;
+    border-right: 0;
+  }
+  .demo__phone {
+    transform: none !important;
+  }
+  .rf__typed {
+    opacity: 1 !important;
+  }
+  .rf__stars i {
+    color: #f4b400;
+  }
+  .qr-art {
+    filter: none;
+  }
+}
+
+
+/* ---------- Ponuda: predlog A6 ---------- */
+.pick {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 28px 0 0;
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid rgb(47 211 179 / 50%);
+  background: linear-gradient(140deg, rgb(47 211 179 / 16%), rgb(47 211 179 / 4%));
+}
+.pick__badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  font: 800 0.8rem/1.4 var(--font-head);
+}
+.pick__size {
+  flex: none;
+  display: grid;
+  place-items: end start;
+  width: 104px;
+  height: 128px;
+  padding: 0 0 4px 4px;
+  border-radius: 8px;
+  background:
+    linear-gradient(rgb(255 255 255 / 8%) 1px, transparent 1px) 0 0 / 100% 20px,
+    linear-gradient(90deg, rgb(255 255 255 / 8%) 1px, transparent 1px) 0 0 / 20px 100%;
+}
+.pick__sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 76px;
+  height: 106px;
+  border-radius: 5px;
+  background: #f3eadb;
+  color: #3a2a22;
+  box-shadow: 0 10px 20px -8px rgb(0 0 0 / 50%), 0 0 0 3px rgb(255 255 255 / 45%);
+  transform: perspective(300px) rotateX(8deg);
+}
+.pick__sheet b {
+  font: 800 1.4rem/1 var(--font-head);
+  color: #b5553b;
+}
+.pick__sheet small {
+  margin-top: 5px;
+  font-size: 0.56rem;
+  white-space: nowrap;
+}
+.pick h3 {
+  margin-bottom: 6px;
+}
+.pick p {
+  margin: 0;
+  color: #dfe8f3;
+}
+.offer__kit {
+  margin-top: 20px;
+}
+.offer__side {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+.easy {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 5%);
+  border: 1px dashed rgb(47 211 179 / 45%);
+}
+.easy p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+.easy b {
+  color: #fff;
+}
+.easy__ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+}
+.easy__ico svg {
+  width: 18px;
+  height: 18px;
+}
+@media (max-width: 479px) {
+  .pick {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 28px;
+  }
+}
+
+/* ---------- Kontakt ---------- */
+.contact__steps {
+  list-style: none;
+  counter-reset: cs;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.contact__steps li {
+  counter-increment: cs;
+  position: relative;
+  padding-left: 42px;
+  color: #fff;
+  font-weight: 500;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+}
+.contact__steps li::before {
+  content: counter(cs);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--teal-bright);
+  color: var(--teal-ink);
+  font: 800 0.85rem/1 var(--font-head);
+}
+.contact__alt {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.contact__alt > p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+.contact__alt .contact__direct {
+  margin-top: 14px;
+}
+.form__title {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  color: var(--navy) !important;
+}
+
+/* Kategorije */
+.cats {
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 560px) {
+  .cats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.cat {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.cat input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.cat__box {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  column-gap: 12px;
+  row-gap: 2px;
+  height: 100%;
+  padding: 14px 14px 14px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #c5d4d1;
+  background: #fff;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+.cat__box::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #c5d4d1;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cat:hover .cat__box {
+  border-color: var(--muted);
+}
+.cat input:checked + .cat__box {
+  border-color: var(--teal-dark);
+  background: #eef8f5;
+  box-shadow: 0 0 0 1px var(--teal-dark);
+}
+.cat input:checked + .cat__box::after {
+  border-color: var(--teal-dark);
+  box-shadow: inset 0 0 0 4px #fff;
+  background: var(--teal-dark);
+}
+.cat input:focus-visible + .cat__box {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--teal-dark);
+}
+.cats--error .cat__box {
+  border-color: #b42318;
+}
+.cat__ico {
+  grid-row: span 3;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--paper-tint);
+  color: var(--teal-dark);
+}
+.cat__ico svg {
+  width: 22px;
+  height: 22px;
+}
+.cat__title {
+  padding-right: 26px;
+  font: 800 0.98rem/1.25 var(--font-head);
+  color: var(--navy);
+}
+.cat__desc {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.cat__tag {
+  justify-self: start;
+  margin-top: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #e3f4f0;
+  color: var(--teal-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.form textarea::placeholder {
+  color: #8796a8;
+}
+
+
+/* ---------- Footer ---------- */
+.footer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--navy-950);
+  color: var(--ink-muted);
+  padding: 72px 0 0;
+  border-top: 1px solid var(--line);
+}
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal-bright), transparent);
+  opacity: 0.6;
+}
+.footer__glow {
+  position: absolute;
+  z-index: -1;
+  width: 560px;
+  height: 560px;
+  left: -160px;
+  top: -260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(0 159 131 / 18%), transparent 65%);
+}
+.footer__grid {
+  display: grid;
+  gap: 40px;
+}
+.footer__brand .logo {
+  font-size: 2rem;
+}
+.footer__slogan {
+  margin: 10px 0 14px;
+  color: var(--teal-bright);
+  font: 700 1rem/1.4 var(--font-head);
+}
+.footer__about {
+  max-width: 34ch;
+  margin: 0 0 22px;
+}
+.footer__h {
+  margin: 0 0 16px;
+  font: 800 0.95rem/1.2 var(--font-head);
+  color: #fff;
+  letter-spacing: 0;
+}
+.footer__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.footer__col a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer__col a:hover {
+  color: #fff;
+}
+.footer__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer__contact svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--teal-bright);
+}
+.footer__mark {
+  margin: 8px 0 -0.34em;
+  text-align: center;
+  font: 800 clamp(5rem, 22vw, 17rem) / 0.9 var(--font-head);
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 9%);
+  background: linear-gradient(180deg, rgb(47 211 179 / 12%), transparent 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
+}
+.footer__legal {
+  position: relative;
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+.footer__legal p {
+  margin: 0;
+}
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.footer__top:hover {
+  color: #fff;
+}
+.footer__top svg {
+  width: 16px;
+  height: 16px;
+}
+@media (min-width: 760px) {
+  .footer__grid {
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 48px;
+  }
+}
+
+/* ---------- Karusel primera ---------- */
+.carousel {
+  position: relative;
+}
+#primeri .examples {
+  display: flex;
+  grid-template-columns: none;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 4px 2px 8px;
+  margin: 0;
+  overscroll-behavior-x: contain;
+}
+#primeri .examples::-webkit-scrollbar {
+  display: none;
+}
+#primeri .example-card {
+  flex: 0 0 calc((100% - 48px) / 3);
+  scroll-snap-align: start;
+}
+@media (max-width: 1023px) {
+  #primeri .example-card {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+}
+@media (max-width: 639px) {
+  #primeri .examples {
+    gap: 14px;
+  }
+  #primeri .example-card {
+    flex-basis: 84%;
+  }
+}
+.carousel__arrow {
+  position: absolute;
+  top: calc(50% - 60px);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgb(255 255 255 / 25%);
+  background: rgb(6 29 64 / 85%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 60%);
+  transition: background-color 0.2s, transform 0.25s var(--ease), border-color 0.2s;
+}
+.carousel__arrow:hover {
+  background: var(--teal-bright);
+  border-color: var(--teal-bright);
+  color: var(--teal-ink);
+  transform: scale(1.06);
+}
+.carousel__arrow--prev {
+  left: -26px;
+}
+.carousel__arrow--next {
+  right: -26px;
+}
+@media (max-width: 1240px) {
+  .carousel__arrow--prev {
+    left: 8px;
+  }
+  .carousel__arrow--next {
+    right: 8px;
+  }
+}
+@media (max-width: 639px) {
+  .carousel__arrow {
+    width: 44px;
+    height: 44px;
+  }
+}
+.carousel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.carousel__dots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.carousel__dot {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.carousel__dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 28%);
+  transition: width 0.3s var(--ease), background-color 0.3s;
+}
+.carousel__dot[aria-current="true"]::before {
+  width: 26px;
+  background: var(--teal-bright);
+}
+.carousel__pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 4%);
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.carousel__pause:hover {
+  color: #fff;
+  border-color: rgb(255 255 255 / 40%);
+}
+
+/* ---------- Dodatno za HTML verziju ---------- */
+[hidden] {
+  display: none !important;
+}
+.btn--outline {
+  background: #fff;
+  color: #7a271a;
+  border-color: #fecdca;
+}
+.btn--outline:hover {
+  background: #fff5f4;
+  color: #7a271a;
+  border-color: #f04438;
+}
+.form-error__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.form .form-error__actions .btn {
+  width: auto;
+  text-decoration: none;
+}
+.example-card__type {
+  display: inline-block;
+  margin: 0 0 8px !important;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(47 211 179 / 12%);
+  color: #bdf3e7 !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.form-error__copied:empty {
+  display: none;
+}
+.form-error__copied {
+  margin-top: 8px !important;
+  font-size: 0.9rem;
+}
+.examples > li,
+.benefits,
+.examples {
+  list-style: none;
+}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#sadrzaj">Preskoči na sadržaj</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="#vrh" class="header__brand" aria-label="tapGo, na vrh strane"><span class="logo">tap<span class="logo__accent">Go</span></span></a>
+    <nav class="header__nav" aria-label="Glavna navigacija">
+      <ul>
+        <li><a href="#kako-radi">Kako radi</a></li>
+        <li><a href="#prednosti">Prednosti</a></li>
+        <li><a href="#nfc-qr">NFC ili QR</a></li>
+        <li><a href="#primeri">Primeri</a></li>
+        <li><a href="#pitanja">Pitanja</a></li>
+      </ul>
+    </nav>
+    <div class="header__actions">
+      <a href="#kontakt" class="btn btn--primary btn--sm">Zatražite ponudu</a>
+      <button type="button" class="header__toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobilni-meni">
+        <span class="visually-hidden" id="menu-label">Otvori meni</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path id="menu-icon" d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobilni-meni" class="mobile-menu" hidden>
+    <nav aria-label="Mobilna navigacija" class="container">
+      <ul>
+        <li><a href="#kako-radi">Kako radi</a></li>
+        <li><a href="#prednosti">Prednosti</a></li>
+        <li><a href="#nfc-qr">NFC ili QR</a></li>
+        <li><a href="#primeri">Primeri</a></li>
+        <li><a href="#pitanja">Pitanja</a></li>
+      </ul>
+      <a href="#kontakt" class="btn btn--primary btn--block">Zatražite ponudu</a>
+    </nav>
+  </div>
+</header>
+
+<main id="sadrzaj" tabindex="-1">
+
+<!-- NASLOVNA -->
+<section class="hero" id="vrh" aria-labelledby="hero-naslov">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="eyebrow anim-in" style="--d:0ms"><span class="pulse-dot" aria-hidden="true"></span>Prisloni. Poveži. Pokreni.</p>
+      <h1 id="hero-naslov" class="anim-in" style="--d:80ms">Olakšajte gostima da ostave <span class="hl">Google recenziju.</span></h1>
+      <p class="lead anim-in" style="--d:160ms">Personalizovani NFC stalak za vaš pult. Gost približi telefon, otvori link i podeli utisak dok mu je poseta još sveža.</p>
+      <div class="hero__cta anim-in" style="--d:240ms">
+        <a href="#kontakt" class="btn btn--primary btn--lg">Zatražite ponudu
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#kako-radi" class="btn btn--ghost btn--lg">Pogledajte kako radi</a>
+      </div>
+    </div>
+    <div class="hero__visual anim-in" style="--d:200ms">
+      <figure class="hv">
+        <div class="hv__glow" aria-hidden="true"></div>
+        <svg
+        class="hv__svg"
+        viewBox="0 120 520 440"
+        role="img"
+        aria-labelledby="hv-title"
+      >
+        <title id="hv-title">
+          Ilustracija: gost približava telefon tapGo stalku na pultu i otvara stranicu za recenziju
+        </title>
+        <defs>
+          <linearGradient id="hv-counter" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#123d7a" />
+            <stop offset="1" stop-color="#0a2a5a" />
+          </linearGradient>
+          <linearGradient id="hv-acrylic" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".55" />
+            <stop offset=".5" stop-color="#ffffff" stop-opacity=".12" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity=".35" />
+          </linearGradient>
+          <linearGradient id="hv-insert" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f6f1e7" />
+            <stop offset="1" stop-color="#eadfcb" />
+          </linearGradient>
+          <linearGradient id="hv-fade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0" />
+            <stop offset=".18" stop-color="#fff" />
+            <stop offset=".82" stop-color="#fff" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          </linearGradient>
+          <mask id="hv-mask">
+            <rect width="520" height="560" fill="url(#hv-fade)" />
+          </mask>
+          <linearGradient id="hv-screen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0f2f63" />
+            <stop offset="1" stop-color="#082754" />
+          </linearGradient>
+        </defs>
+        <g mask="url(#hv-mask)">
+          <path d="M0 430 L520 400 L520 560 L0 560 Z" fill="url(#hv-counter)" />
+          <path d="M0 430 L520 400" stroke="#2fd3b3" stroke-opacity=".5" stroke-width="2" />
+        </g>
+        <ellipse cx="200" cy="432" rx="120" ry="12" fill="#000" opacity=".28" />
+        <g class="hv__stand">
+          <g transform="translate(110 150) skewX(-6)">
+            <rect x="8" y="8" width="170" height="240" rx="6" fill="url(#hv-insert)" />
+            <rect x="8" y="8" width="170" height="54" rx="6" fill="#b5553b" />
+            <rect x="8" y="50" width="170" height="12" fill="#b5553b" />
+            <text x="93" y="42" text-anchor="middle" font-family="Manrope Variable, Manrope, sans-serif" font-weight="800" font-size="17" fill="#fff">
+              Vaš lokal
+            </text>
+            <text x="93" y="96" text-anchor="middle" font-family="Inter Variable, Inter, sans-serif" font-weight="600" font-size="12.5" fill="#3a2a22">
+              Podelite utisak
+            </text>
+            <text x="93" y="113" text-anchor="middle" font-family="Inter Variable, Inter, sans-serif" font-size="10.5" fill="#6b5548">
+              prislonite telefon ovde
+            </text>
+            <g class="hv__mark" transform="translate(93 170)">
+              <circle r="36" fill="#fff" stroke="#b5553b" stroke-width="2" />
+              <path d="M-12 -14a20 20 0 0 1 0 28M-2 -20a28 28 0 0 1 0 40M8 -26a36 36 0 0 1 0 52" fill="none" stroke="#b5553b" stroke-width="3.5" stroke-linecap="round" />
+              <circle cx="-20" cy="0" r="4" fill="#b5553b" />
+            </g>
+            <text x="93" y="236" text-anchor="middle" font-family="Manrope Variable, Manrope, sans-serif" font-weight="800" font-size="10" fill="#6b5548" letter-spacing=".5">
+              tapGo
+            </text>
+            <rect x="0" y="0" width="186" height="256" rx="10" fill="url(#hv-acrylic)" stroke="#fff" stroke-opacity=".6" stroke-width="1.5" />
+            <path d="M14 6 L60 6 L18 120 Z" fill="#fff" opacity=".18" />
+          </g>
+          <path d="M92 402 L292 402 L300 418 L84 418 Z" fill="#fff" opacity=".35" />
+          <path d="M84 418 L300 418" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" />
+        </g>
+        <g class="hv__waves" transform="translate(196 320)" aria-hidden="true">
+          <circle class="hv__wave hv__wave--1" r="40" />
+          <circle class="hv__wave hv__wave--2" r="40" />
+          <circle class="hv__wave hv__wave--3" r="40" />
+        </g>
+        <g class="hv__phone">
+          <path d="M392 520 C 380 470, 376 440, 386 404 L 446 396 C 466 440, 470 480, 470 560 L 396 560 Z" fill="#f1c6a6" />
+          <g transform="rotate(-14 420 300)">
+            <rect x="350" y="150" width="140" height="270" rx="24" fill="#0b1426" />
+            <rect x="358" y="158" width="124" height="254" rx="18" fill="url(#hv-screen)" />
+            <rect x="398" y="166" width="44" height="8" rx="4" fill="#0b1426" />
+            <g class="hv__screen-idle">
+              <rect x="372" y="196" width="96" height="10" rx="5" fill="#fff" opacity=".18" />
+              <rect x="372" y="214" width="70" height="10" rx="5" fill="#fff" opacity=".12" />
+              <rect x="372" y="244" width="96" height="60" rx="10" fill="#fff" opacity=".07" />
+              <rect x="372" y="312" width="96" height="60" rx="10" fill="#fff" opacity=".07" />
+            </g>
+            <g class="hv__screen-open">
+              <rect x="364" y="188" width="112" height="196" rx="12" fill="#fff" />
+              <circle cx="384" cy="210" r="9" fill="#e7f6f2" />
+              <path d="M380 210 l3 3 l6 -6" stroke="#009f83" stroke-width="2" fill="none" stroke-linecap="round" />
+              <rect x="398" y="204" width="64" height="6" rx="3" fill="#082754" opacity=".85" />
+              <rect x="398" y="214" width="44" height="5" rx="2.5" fill="#52647a" opacity=".5" />
+              <text x="420" y="248" text-anchor="middle" font-family="Manrope Variable, Manrope, sans-serif" font-weight="800" font-size="11.5" fill="#082754">
+                Podelite utisak
+              </text>
+              <rect x="374" y="262" width="92" height="56" rx="8" fill="#f4f8f7" stroke="#dce7e5" />
+              <rect x="382" y="272" width="64" height="5" rx="2.5" fill="#52647a" opacity=".35" />
+              <rect x="382" y="282" width="52" height="5" rx="2.5" fill="#52647a" opacity=".35" />
+              <rect x="374" y="332" width="92" height="28" rx="8" fill="#007a66" />
+              <text x="420" y="350" text-anchor="middle" font-family="Inter Variable, Inter, sans-serif" font-weight="700" font-size="10.5" fill="#fff">
+                Objavi
+              </text>
+            </g>
+            <g class="hv__grip">
+              <rect x="334" y="290" width="22" height="26" rx="11" fill="#f1c6a6" stroke="#dfa985" stroke-width="1" />
+              <rect x="333" y="318" width="23" height="27" rx="11.5" fill="#f1c6a6" stroke="#dfa985" stroke-width="1" />
+              <rect x="334" y="347" width="22" height="26" rx="11" fill="#eebd9b" stroke="#dfa985" stroke-width="1" />
+              <rect x="336" y="375" width="20" height="22" rx="10" fill="#eab792" stroke="#dfa985" stroke-width="1" />
+              <rect x="484" y="318" width="20" height="52" rx="10" fill="#f1c6a6" stroke="#dfa985" stroke-width="1" />
+            </g>
+          </g>
+        </g>
+      </svg>
+        <figcaption>Ilustrativni prikaz principa rada. Gost sam odlučuje da li će i šta napisati.</figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="ticker" aria-label="Za koga je tapGo">
+    <div class="ticker__track">
+      <ul class="ticker__list"><li>Kafići</li><li>Restorani</li><li>Frizerski saloni</li><li>Beauty saloni</li><li>Fast food</li><li>Smeštaj</li><li>Maloprodaja</li></ul>
+      <ul class="ticker__list" aria-hidden="true"><li>Kafići</li><li>Restorani</li><li>Frizerski saloni</li><li>Beauty saloni</li><li>Fast food</li><li>Smeštaj</li><li>Maloprodaja</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ZASTO JE VAZNO: GOOGLE IZLOG -->
+<section class="section section--deep" id="zasto" aria-labelledby="zasto-naslov">
+  <div class="container why">
+    <div class="why__copy" data-reveal>
+      <p class="eyebrow">Zašto je to važno</p>
+      <h2 id="zasto-naslov">Gosti vas biraju na Google-u, pre nego što uđu</h2>
+      <p class="lead">Kada neko traži „kafić u blizini“ ili „frizer Novi Sad“, prvo vidi zvezdice, broj recenzija i ono što su drugi napisali. Vaš Google profil je izlog koji radi i kada ste zatvoreni.</p>
+      <ul class="why__points">
+        <li><strong>Više recenzija i dobre ocene</strong> mogu da poboljšaju vaše mesto u lokalnoj pretrazi i na mapi. To piše i u Google-ovim uputstvima za biznise.</li>
+        <li><strong>Sveže recenzije</strong> pokazuju da lokal radi i da je trenutno dobar, ne pre dve godine.</li>
+        <li><strong>Lokal sa malo recenzija</strong> izgleda nepoznato, čak i kada je odličan.</li>
+      </ul>
+    </div>
+
+    <figure class="search-demo" data-reveal style="--d:120ms" aria-label="Ilustracija pretrage na Google mapama">
+      <div class="ph">
+        <div class="ph__screen ph__screen--light">
+          <div class="sd__bar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#52647a" stroke-width="2"/><path d="M16 16l4 4" stroke="#52647a" stroke-width="2" stroke-linecap="round"/></svg><span class="sd__typed">kafić u blizini</span></div>
+          <div class="sd__map" aria-hidden="true">
+            <span class="sd__pin sd__pin--a">A</span><span class="sd__pin sd__pin--b">B</span>
+          </div>
+          <div class="sd__card sd__card--a">
+            <div class="sd__name">Lokal A <span class="sd__open">Otvoreno</span></div>
+            <div class="sd__rating"><b>4,8</b> <span class="sd__stars">★★★★★</span> <span>(214)</span></div>
+            <div class="sd__rev">„Odlična kafa i ljubazno osoblje.“ · pre 2 dana</div>
+            <span class="sd__pick">Gost bira ovde</span>
+          </div>
+          <div class="sd__card sd__card--b">
+            <div class="sd__name">Lokal B <span class="sd__open">Otvoreno</span></div>
+            <div class="sd__rating"><b>4,6</b> <span class="sd__stars">★★★★★</span> <span>(9)</span></div>
+            <div class="sd__rev">Poslednja recenzija · pre 8 meseci</div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Ilustracija. Dva slična lokala, a gost bira onaj o kome zna više.</figcaption>
+    </figure>
+  </div>
+
+  <div class="container">
+    <ul class="stats" data-reveal>
+      <li class="stat">
+        <span class="stat__num">97%</span>
+        <p>potrošača čita recenzije kada bira lokalni biznis.</p>
+        <span class="stat__src">BrightLocal, Local Consumer Review Survey 2026</span>
+      </li>
+      <li class="stat">
+        <span class="stat__num">85%</span>
+        <p>je sklonije da izabere biznis posle čitanja pozitivnih recenzija.</p>
+        <span class="stat__src">BrightLocal, Local Consumer Review Survey 2026</span>
+      </li>
+      <li class="stat">
+        <span class="stat__num">5–9%</span>
+        <p>veći prihod je imao nezavisni restoran za svaku zvezdicu više u oceni.</p>
+        <span class="stat__src">Harvard Business School, M. Luca (Yelp, Sijetl)</span>
+      </li>
+    </ul>
+    <details class="sources">
+      <summary>Izvori i napomena</summary>
+      <p>Istraživanja su rađena u SAD i pokazuju opšti obrazac ponašanja kupaca, a ne obećanje rezultata za konkretan lokal.</p>
+      <ul>
+        <li><a href="https://support.google.com/business/answer/7091" target="_blank" rel="noopener noreferrer">Google: How to improve your local ranking</a></li>
+        <li><a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" rel="noopener noreferrer">BrightLocal: Local Consumer Review Survey 2026</a></li>
+        <li><a href="https://econpapers.repec.org/RePEc:hbs:wpaper:12-016" target="_blank" rel="noopener noreferrer">Luca, M. „Reviews, Reputation, and Revenue: The Case of Yelp.com“, Harvard Business School</a></li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- KAKO RADI -->
+<section class="section" id="kako-radi" aria-labelledby="kako-naslov">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">Kako radi</p>
+      <h2 id="kako-naslov">Od pulta do objavljene recenzije, bez traženja</h2>
+      <p class="lead lead--center">Zadovoljni gosti često bi ostavili utisak, ali ne žele da traže vaš profil po Google-u. tapGo im skraćuje put na jedan dodir.</p>
+    </div>
+
+    <div class="paths" data-reveal>
+      <div class="path path--old">
+        <p class="path__label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Bez tapGo</p>
+        <ol>
+          <li>Otvori Google Maps</li>
+          <li>Ukucaj naziv lokala</li>
+          <li>Pronađi pravi lokal među rezultatima</li>
+          <li>Otvori karticu sa recenzijama</li>
+          <li>Pronađi „Napiši recenziju“</li>
+        </ol>
+        <p class="path__foot">Svaki korak je još jedna prilika da gost odustane.</p>
+      </div>
+      <div class="path__vs" aria-hidden="true">→</div>
+      <div class="path path--new">
+        <p class="path__label"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2"/><path d="M7.5 12.5l3 3 6-6.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Sa tapGo</p>
+        <ol>
+          <li>Prisloni telefon uz stalak</li>
+          <li>Napiši utisak u formi koja se već otvorila</li>
+        </ol>
+        <p class="path__foot">Forma za recenziju vašeg lokala je odmah na ekranu.</p>
+        <p class="path__big"><span>1</span> dodir umesto 5 koraka</p>
+      </div>
+    </div>
+
+    <div class="demo" id="demo" data-step="1" data-reveal>
+      <div class="demo__stage">
+        <div class="demo__stand" aria-hidden="true">
+          <div class="demo__insert"><span class="demo__brand">Vaš lokal</span><span class="demo__q">Kako vam je bilo?</span><span class="demo__nfc"><svg viewBox="0 0 24 24"><path d="M8 7a7 7 0 0 1 0 10M12 4.5a10.5 10.5 0 0 1 0 15M16 2a14 14 0 0 1 0 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span></div>
+          <div class="demo__waves"><i></i><i></i><i></i></div>
+        </div>
+        <div class="ph demo__phone" aria-hidden="true">
+          <div class="ph__screen">
+            <!-- 1: prislanjanje -->
+            <div class="scr scr-1">
+              <div class="lock__time">12:41</div>
+              <div class="lock__date">ponedeljak, 16. novembar</div>
+              <div class="lock__hint"><svg viewBox="0 0 24 24"><path d="M8 7a7 7 0 0 1 0 10M12 4.5a10.5 10.5 0 0 1 0 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Telefon prepoznaje stalak</div>
+            </div>
+            <!-- 2: obavestenje -->
+            <div class="scr scr-2">
+              <div class="lock__time">12:41</div>
+              <div class="lock__date">ponedeljak, 16. novembar</div>
+              <div class="notif">
+                <span class="notif__icon">G</span>
+                <span class="notif__text"><b>Otvori u pregledaču</b><span>google.com · Napišite recenziju</span></span>
+                <span class="notif__tap"></span>
+              </div>
+            </div>
+            <!-- 3: forma -->
+            <div class="scr scr-3 scr--light">
+              <div class="rf__head"><span class="rf__avatar">VL</span><span><b>Vaš lokal</b><small>Objavljuje se javno</small></span></div>
+              <div class="rf__stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
+              <div class="rf__box"><span class="rf__typed">Odlična kafa, brza usluga i prijatna atmosfera.</span></div>
+              <div class="rf__btn">Objavi</div>
+            </div>
+            <!-- 4: objavljeno -->
+            <div class="scr scr-4 scr--light">
+              <div class="ok__check"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <b class="ok__title">Hvala!</b>
+              <span class="ok__sub">Recenzija je objavljena</span>
+              <div class="ok__card"><span class="rf__mini">★★★★★</span><span>Odlična kafa, brza usluga i prijatna atmosfera.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ol class="demo__steps">
+        <li><button type="button" data-go="1"><span class="ds__n">1</span><span><b>Prisloni telefon.</b> Gost približi otključan telefon označenom mestu na stalku. Ne treba kamera ni nišanjenje.</span><i class="ds__bar"></i></button></li>
+        <li><button type="button" data-go="2"><span class="ds__n">2</span><span><b>Link se otvara.</b> Telefon očita NFC tag. Na nekim telefonima se pojavi obaveštenje koje gost dodirne.</span><i class="ds__bar"></i></button></li>
+        <li><button type="button" data-go="3"><span class="ds__n">3</span><span><b>Ocena i utisak.</b> Otvara se forma za recenziju baš vašeg lokala. Gost sam bira ocenu i šta će napisati. Google može tražiti prijavu.</span><i class="ds__bar"></i></button></li>
+        <li><button type="button" data-go="4"><span class="ds__n">4</span><span><b>Objavljeno.</b> Recenzija se pojavljuje na vašem Google profilu, gde je vide budući gosti.</span><i class="ds__bar"></i></button></li>
+      </ol>
+    </div>
+    <p class="note" data-reveal>Prislanjanje telefona samo otvara formu. Ništa se ne objavljuje automatski, odluka je uvek na gostu.</p>
+  </div>
+</section>
+
+<!-- PREDNOSTI -->
+<section class="section section--deep" id="prednosti" aria-labelledby="prednosti-naslov">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">Šta dobijate</p>
+      <h2 id="prednosti-naslov">Koristi za vas, vaše goste i one koji tek dolaze</h2>
+    </div>
+
+    <div class="gains">
+      <div class="gain gain--owner" data-reveal>
+        <h3><span class="gain__ico"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>Za vas i vaš lokal</h3>
+        <ul>
+          <li><b>Više recenzija bez dodatnog posla.</b> Stalak poziva svakog gosta, svakog dana. Osoblje ne mora ništa da objašnjava ni da šalje linkove.</li>
+          <li><b>Jači Google profil.</b> Stalan priliv novih recenzija drži profil aktivnim i svežim, a to je ono što gosti i Google gledaju.</li>
+          <li><b>Iskrena povratna informacija.</b> Saznajete šta gosti vole, a šta treba popraviti. Na svaku recenziju možete javno da odgovorite.</li>
+          <li><b>Izgleda kao deo enterijera.</b> Umetak je u bojama i stilu vašeg lokala. Nema baterije, struje ni održavanja.</li>
+          <li><b>Po Google pravilima.</b> Stalak poziva sve goste podjednako, bez nagrada i bez pritiska, upravo onako kako Google dozvoljava.</li>
+        </ul>
+      </div>
+      <div class="gain gain--guest" data-reveal style="--d:120ms">
+        <h3><span class="gain__ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Za vaše goste</h3>
+        <ul>
+          <li><b>Bez traženja i kucanja.</b> Jedan dodir i forma je otvorena.</li>
+          <li><b>Bez posebne aplikacije</b> na telefonima koji podržavaju NFC.</li>
+          <li><b>Njihova odluka.</b> Sami biraju da li će i šta napisati.</li>
+        </ul>
+        <h3 class="gain__h-next"><span class="gain__ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Za buduće goste</h3>
+        <ul>
+          <li><b>Stvarna, sveža iskustva</b> pomažu im da izaberu baš vas i znaju šta da očekuju.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="loop" data-reveal>
+      <div class="loop__art" aria-hidden="true">
+        <svg viewBox="0 0 300 300">
+          <circle cx="150" cy="150" r="108" fill="none" stroke="rgb(255 255 255 / 12%)" stroke-width="2"/>
+          <circle cx="150" cy="150" r="108" fill="none" stroke="#2fd3b3" stroke-width="3" stroke-dasharray="40 640" stroke-linecap="round" class="loop__arc"/>
+          <g class="loop__nodes">
+            <circle cx="150" cy="42" r="26"/><text x="150" y="49">1</text>
+            <circle cx="258" cy="150" r="26"/><text x="258" y="157">2</text>
+            <circle cx="150" cy="258" r="26"/><text x="150" y="265">3</text>
+            <circle cx="42" cy="150" r="26"/><text x="42" y="157">4</text>
+          </g>
+          <text x="150" y="146" class="loop__center">Krug</text>
+          <text x="150" y="168" class="loop__center loop__center--sm">poverenja</text>
+        </svg>
+      </div>
+      <div class="loop__text">
+        <h3>Kako recenzije postaju novi gosti</h3>
+        <ol>
+          <li><b>Zadovoljan gost</b> prisloni telefon i ostavi utisak.</li>
+          <li><b>Profil raste.</b> Više svežih recenzija i jasnija slika o lokalu.</li>
+          <li><b>Bolja vidljivost i poverenje.</b> Više ljudi vas pronađe i lakše se odluči.</li>
+          <li><b>Novi gosti</b> dolaze, a deo njih ostavi novu recenziju. Krug kreće ponovo.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NFC ILI QR -->
+<section class="section" id="nfc-qr" aria-labelledby="nfcqr-naslov">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">NFC ili QR</p>
+      <h2 id="nfcqr-naslov">Zašto NFC stalak, a ne samo QR kod?</h2>
+      <p class="lead lead--center">QR kod je koristan, ali traži više od gosta. Što je manje koraka, više ljudi stigne do kraja.</p>
+    </div>
+
+    <div class="duel" data-reveal>
+      <div class="duel__card duel__card--qr">
+        <div class="duel__art" aria-hidden="true">
+          <div class="ph ph--mini">
+            <div class="ph__screen ph__screen--cam">
+              <div class="cam__view"><svg class="qr-art" viewBox="-12 -12 174 174" aria-hidden="true"><rect x="-12" y="-12" width="174" height="174" rx="10" fill="#fff"/><path d="M0 48h6v6h-6zM0 54h6v6h-6zM0 66h6v6h-6zM0 78h6v6h-6zM0 84h6v6h-6zM0 96h6v6h-6zM6 48h6v6h-6zM6 54h6v6h-6zM6 60h6v6h-6zM6 66h6v6h-6zM6 78h6v6h-6zM6 84h6v6h-6zM12 54h6v6h-6zM12 66h6v6h-6zM12 78h6v6h-6zM12 84h6v6h-6zM12 90h6v6h-6zM12 96h6v6h-6zM18 54h6v6h-6zM18 72h6v6h-6zM18 84h6v6h-6zM18 90h6v6h-6zM18 96h6v6h-6zM24 54h6v6h-6zM24 60h6v6h-6zM24 72h6v6h-6zM24 78h6v6h-6zM24 96h6v6h-6zM30 72h6v6h-6zM30 84h6v6h-6zM30 90h6v6h-6zM36 48h6v6h-6zM36 60h6v6h-6zM36 90h6v6h-6zM42 60h6v6h-6zM42 78h6v6h-6zM42 90h6v6h-6zM48 18h6v6h-6zM48 24h6v6h-6zM48 36h6v6h-6zM48 42h6v6h-6zM48 48h6v6h-6zM48 54h6v6h-6zM48 60h6v6h-6zM48 72h6v6h-6zM48 78h6v6h-6zM48 84h6v6h-6zM48 96h6v6h-6zM48 102h6v6h-6zM48 132h6v6h-6zM48 138h6v6h-6zM48 144h6v6h-6zM54 12h6v6h-6zM54 18h6v6h-6zM54 24h6v6h-6zM54 30h6v6h-6zM54 48h6v6h-6zM54 54h6v6h-6zM54 60h6v6h-6zM54 66h6v6h-6zM54 108h6v6h-6zM54 138h6v6h-6zM54 144h6v6h-6zM60 0h6v6h-6zM60 12h6v6h-6zM60 18h6v6h-6zM60 24h6v6h-6zM60 30h6v6h-6zM60 36h6v6h-6zM60 42h6v6h-6zM60 48h6v6h-6zM60 54h6v6h-6zM60 60h6v6h-6zM60 66h6v6h-6zM60 72h6v6h-6zM60 90h6v6h-6zM60 96h6v6h-6zM60 102h6v6h-6zM60 108h6v6h-6zM60 114h6v6h-6zM60 132h6v6h-6zM60 144h6v6h-6zM66 0h6v6h-6zM66 6h6v6h-6zM66 12h6v6h-6zM66 24h6v6h-6zM66 30h6v6h-6zM66 48h6v6h-6zM66 60h6v6h-6zM66 90h6v6h-6zM66 96h6v6h-6zM66 102h6v6h-6zM66 126h6v6h-6zM66 132h6v6h-6zM72 24h6v6h-6zM72 36h6v6h-6zM72 42h6v6h-6zM72 48h6v6h-6zM72 54h6v6h-6zM72 60h6v6h-6zM72 78h6v6h-6zM72 102h6v6h-6zM72 108h6v6h-6zM72 114h6v6h-6zM72 120h6v6h-6zM72 126h6v6h-6zM78 0h6v6h-6zM78 18h6v6h-6zM78 48h6v6h-6zM78 54h6v6h-6zM78 66h6v6h-6zM78 84h6v6h-6zM78 90h6v6h-6zM78 108h6v6h-6zM78 114h6v6h-6zM78 120h6v6h-6zM78 138h6v6h-6zM84 12h6v6h-6zM84 24h6v6h-6zM84 30h6v6h-6zM84 60h6v6h-6zM84 78h6v6h-6zM84 84h6v6h-6zM84 90h6v6h-6zM84 96h6v6h-6zM84 108h6v6h-6zM84 114h6v6h-6zM84 120h6v6h-6zM84 132h6v6h-6zM84 138h6v6h-6zM90 6h6v6h-6zM90 36h6v6h-6zM90 42h6v6h-6zM90 48h6v6h-6zM90 54h6v6h-6zM90 66h6v6h-6zM90 72h6v6h-6zM90 90h6v6h-6zM90 114h6v6h-6zM90 126h6v6h-6zM90 132h6v6h-6zM96 18h6v6h-6zM96 48h6v6h-6zM96 60h6v6h-6zM96 90h6v6h-6zM96 114h6v6h-6zM96 120h6v6h-6zM96 126h6v6h-6zM96 132h6v6h-6zM96 138h6v6h-6zM96 144h6v6h-6zM102 66h6v6h-6zM102 84h6v6h-6zM102 102h6v6h-6zM102 114h6v6h-6zM102 138h6v6h-6zM102 144h6v6h-6zM108 54h6v6h-6zM108 60h6v6h-6zM108 66h6v6h-6zM108 78h6v6h-6zM108 90h6v6h-6zM108 96h6v6h-6zM108 102h6v6h-6zM108 120h6v6h-6zM108 144h6v6h-6zM114 48h6v6h-6zM114 54h6v6h-6zM114 66h6v6h-6zM114 72h6v6h-6zM114 78h6v6h-6zM114 96h6v6h-6zM114 102h6v6h-6zM114 126h6v6h-6zM114 132h6v6h-6zM114 144h6v6h-6zM120 48h6v6h-6zM120 72h6v6h-6zM120 84h6v6h-6zM120 96h6v6h-6zM120 102h6v6h-6zM120 120h6v6h-6zM120 126h6v6h-6zM120 138h6v6h-6zM120 144h6v6h-6zM126 48h6v6h-6zM126 54h6v6h-6zM126 60h6v6h-6zM126 66h6v6h-6zM126 72h6v6h-6zM126 84h6v6h-6zM126 96h6v6h-6zM126 102h6v6h-6zM126 108h6v6h-6zM126 114h6v6h-6zM126 120h6v6h-6zM126 138h6v6h-6zM126 144h6v6h-6zM132 54h6v6h-6zM132 66h6v6h-6zM132 84h6v6h-6zM132 108h6v6h-6zM132 132h6v6h-6zM132 138h6v6h-6zM132 144h6v6h-6zM138 48h6v6h-6zM138 54h6v6h-6zM138 66h6v6h-6zM138 72h6v6h-6zM138 78h6v6h-6zM138 102h6v6h-6zM138 108h6v6h-6zM138 114h6v6h-6zM138 120h6v6h-6zM138 126h6v6h-6zM138 132h6v6h-6zM138 138h6v6h-6zM144 60h6v6h-6zM144 72h6v6h-6zM144 78h6v6h-6zM144 84h6v6h-6zM144 90h6v6h-6zM144 96h6v6h-6zM144 108h6v6h-6zM144 120h6v6h-6zM144 126h6v6h-6zM144 132h6v6h-6zM144 138h6v6h-6zM144 144h6v6h-6z" fill="#0b1426"/><rect x="0" y="0" width="42" height="42" fill="#0b1426"/><rect x="6" y="6" width="30" height="30" fill="#fff"/><rect x="12" y="12" width="18" height="18" fill="#0b1426"/><rect x="108" y="0" width="42" height="42" fill="#0b1426"/><rect x="114" y="6" width="30" height="30" fill="#fff"/><rect x="120" y="12" width="18" height="18" fill="#0b1426"/><rect x="0" y="108" width="42" height="42" fill="#0b1426"/><rect x="6" y="114" width="30" height="30" fill="#fff"/><rect x="12" y="120" width="18" height="18" fill="#0b1426"/></svg><span class="cam__frame"></span><span class="cam__scan"></span></div>
+              
+            </div>
+          </div>
+        </div>
+        <h3>QR stalak</h3>
+        <ol class="duel__steps">
+          <li>Otključaj telefon</li>
+          <li>Otvori kameru</li>
+          <li>Nanišani i sačekaj da izoštri</li>
+          <li>Dodirni link koji se pojavi</li>
+        </ol>
+      </div>
+      <div class="duel__card duel__card--nfc">
+        <span class="duel__badge">Naš izbor</span>
+        <div class="duel__art" aria-hidden="true">
+          <div class="mini-stand"><span class="mini-stand__nfc"><svg viewBox="0 0 24 24"><path d="M8 7a7 7 0 0 1 0 10M12 4.5a10.5 10.5 0 0 1 0 15M16 2a14 14 0 0 1 0 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><i></i><i></i></div>
+          <div class="ph ph--mini ph--tap"><div class="ph__screen"><div class="tap__ok">✓</div></div></div>
+        </div>
+        <h3>NFC stalak tapGo</h3>
+        <ol class="duel__steps">
+          <li>Prisloni otključan telefon</li>
+          <li>Forma za recenziju se otvara</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="compare-wrap" data-reveal>
+      <table class="compare">
+        <caption class="visually-hidden">Poređenje NFC i QR stalka</caption>
+        <thead><tr><th scope="col"></th><th scope="col">QR kod</th><th scope="col" class="is-nfc">NFC tapGo</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Šta gost radi</th><td data-l="QR kod">Otvara kameru i nišani</td><td data-l="NFC tapGo" class="is-nfc">Samo prisloni telefon</td></tr>
+          <tr><th scope="row">Svetlo i odsjaj</th><td data-l="QR kod">Slabo svetlo i odsjaj na sjajnoj površini mogu da ometu skeniranje</td><td data-l="NFC tapGo" class="is-nfc">Ne zavisi od svetla ni od kamere</td></tr>
+          <tr><th scope="row">Izgled stalka</th><td data-l="QR kod">Crno-beli kvadrat zauzima deo dizajna</td><td data-l="NFC tapGo" class="is-nfc">Čip je skriven, ceo umetak je vaš dizajn</td></tr>
+          <tr><th scope="row">Bezbednost</th><td data-l="QR kod">Odštampan kod neko može da prelepi lažnim, na šta upozorava i FTC</td><td data-l="NFC tapGo" class="is-nfc">Nema odštampanog koda koji bi neko prelepio</td></tr>
+          <tr><th scope="row">Telefoni</th><td data-l="QR kod">Skoro svaki telefon sa kamerom</td><td data-l="NFC tapGo" class="is-nfc">Većina novijih telefona. iPhone XS/XR i noviji čitaju bez aplikacije, Android uz uključen NFC</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="best" data-reveal>
+      <div class="best__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" fill="currentColor"/></svg></div>
+      <div>
+        <h3>Najbolje od oba: NFC kao glavni put, QR kao rezerva</h3>
+        <p>Na isti stalak po dogovoru dodajemo i mali QR kod, za retke telefone bez NFC-a. Tako niko ne ostaje bez načina da ostavi utisak.</p>
+      </div>
+    </div>
+    <details class="sources">
+      <summary>Izvori</summary>
+      <ul>
+        <li><a href="https://support.apple.com/en-euro/guide/iphone/aside/asd-nfc-reader/15.0/ios" target="_blank" rel="noopener noreferrer">Apple: modeli iPhone-a koji podržavaju NFC Tag Reader</a></li>
+        <li><a href="https://consumer.ftc.gov/consumer-alerts/2023/12/scammers-hide-harmful-links-qr-codes-steal-your-information" target="_blank" rel="noopener noreferrer">FTC: Scammers hide harmful links in QR codes</a></li>
+        <li><a href="https://support.google.com/contributionpolicy/answer/7400114" target="_blank" rel="noopener noreferrer">Google Maps: pravila o recenzijama (bez nagrada i selektivnog traženja)</a></li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+<!-- PRIMERI -->
+<section class="section section--deep" id="primeri" aria-labelledby="primeri-naslov">
+  <div class="container">
+    <div class="section__head" data-reveal>
+      <p class="eyebrow">Primeri dizajna</p>
+      <h2 id="primeri-naslov">Kako stalak izgleda u različitim lokalima</h2>
+      <p class="badge">Ilustrativni prikazi personalizacije</p>
+    </div>
+    <div class="carousel" data-reveal role="region" aria-roledescription="karusel" aria-label="Primeri dizajna">
+      <button type="button" class="carousel__arrow carousel__arrow--prev" id="car-prev" aria-label="Prethodni primer">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    <ul class="examples" id="car-track" tabindex="0" aria-label="Primeri, koristite strelice levo i desno">
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/pocetak-dana-caffe.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u krem i terakota tonovima na drvenom pultu kafića Početak dana caffe" data-title="Početak dana caffe" data-caption="Krem i terakota uz drveni pult" aria-label="Uvećaj fotografiju: Početak dana caffe">
+          <img src="slike/pocetak-dana-caffe.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u krem i terakota tonovima na drvenom pultu kafića Početak dana caffe">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Kafić</p>
+          <h3>Početak dana caffe</h3>
+          <p>Krem i terakota uz drveni pult</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/rostilj-021.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u bordo i krem bojama sa natpisom Kakva je bila pljeskavica, na inox pultu roštilja" data-title="Roštilj 021" data-caption="Bordo i krem uz inox pult" aria-label="Uvećaj fotografiju: Roštilj 021">
+          <img src="slike/rostilj-021.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u bordo i krem bojama sa natpisom Kakva je bila pljeskavica, na inox pultu roštilja">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Roštilj</p>
+          <h3>Roštilj 021</h3>
+          <p>Bordo i krem uz inox pult</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/meka-linija.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u lila i krem tonovima na pultu od svetlog drveta u salonu za nokte Meka linija" data-title="Meka linija" data-caption="Lila i krem uz svetli hrast" aria-label="Uvećaj fotografiju: Meka linija">
+          <img src="slike/meka-linija.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u lila i krem tonovima na pultu od svetlog drveta u salonu za nokte Meka linija">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Salon za nokte</p>
+          <h3>Meka linija</h3>
+          <p>Lila i krem uz svetli hrast</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/ivana-frizerski-salon.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u teget i svetloplavoj boji na sivom kamenom pultu frizerskog salona Ivana" data-title="Ivana" data-caption="Teget i svetloplava uz sivi kameni pult" aria-label="Uvećaj fotografiju: Ivana">
+          <img src="slike/ivana-frizerski-salon.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u teget i svetloplavoj boji na sivom kamenom pultu frizerskog salona Ivana">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Frizerski salon</p>
+          <h3>Ivana</h3>
+          <p>Teget i svetloplava uz sivi kameni pult</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/korica-picerija.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u krem i terakota bojama na kamenom pultu picerije Korica" data-title="Korica" data-caption="Krem i terakota uz kameni pult" aria-label="Uvećaj fotografiju: Korica">
+          <img src="slike/korica-picerija.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u krem i terakota bojama na kamenom pultu picerije Korica">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Picerija</p>
+          <h3>Korica</h3>
+          <p>Krem i terakota uz kameni pult</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/parce-srece-picerija.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u petrolej i žutoj boji na pultu picerije Parče sreće" data-title="Parče sreće" data-caption="Petrolej i žuta, u stilu table sa menijem" aria-label="Uvećaj fotografiju: Parče sreće">
+          <img src="slike/parce-srece-picerija.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u petrolej i žutoj boji na pultu picerije Parče sreće">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Picerija</p>
+          <h3>Parče sreće</h3>
+          <p>Petrolej i žuta, u stilu table sa menijem</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/rano-jutro.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u terakota i krem bojama na pultu kafića Rano jutro" data-title="Rano jutro" data-caption="Terakota i krem uz svetli kamen" aria-label="Uvećaj fotografiju: Rano jutro">
+          <img src="slike/rano-jutro.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u terakota i krem bojama na pultu kafića Rano jutro">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Kafić</p>
+          <h3>Rano jutro</h3>
+          <p>Terakota i krem uz svetli kamen</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/tacka-knjizara.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: tapGo stalak u plavoj i žutoj boji na sivom pultu knjižare Tačka" data-title="Tačka" data-caption="Plava i žuta uz sivi pult" aria-label="Uvećaj fotografiju: Tačka">
+          <img src="slike/tacka-knjizara.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: tapGo stalak u plavoj i žutoj boji na sivom pultu knjižare Tačka">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Knjižara i štampa</p>
+          <h3>Tačka</h3>
+          <p>Plava i žuta uz sivi pult</p>
+        </div>
+      </li>
+      <li class="example-card">
+        <button type="button" class="example-card__media" data-preview data-src="slike/berbernica.webp" data-w="1122" data-h="1402" data-alt="Primer dizajna: Širi kadar berbernice sa tapGo stalkom u tamnozelenoj i beloj boji na tamnom pultu" data-title="Berbernica" data-caption="Tamnozelena i bela uz tamni pult" aria-label="Uvećaj fotografiju: Berbernica">
+          <img src="slike/berbernica.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="Primer dizajna: Širi kadar berbernice sa tapGo stalkom u tamnozelenoj i beloj boji na tamnom pultu">
+        </button>
+        <div class="example-card__body">
+          <p class="example-card__type">Berbernica</p>
+          <h3>Berbernica</h3>
+          <p>Tamnozelena i bela uz tamni pult</p>
+        </div>
+      </li>
+    </ul>
+      <button type="button" class="carousel__arrow carousel__arrow--next" id="car-next" aria-label="Sledeći primer">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel__bar">
+        <div class="carousel__dots" id="car-dots"></div>
+        <button type="button" class="carousel__pause" id="car-pause" aria-pressed="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path id="car-pause-icon" d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></svg>
+          <span id="car-pause-label">Pauziraj</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-naslov">
+  <figure class="lightbox__figure">
+    <div class="lightbox__bar">
+      <h3 id="lightbox-naslov"></h3>
+      <button type="button" class="lightbox__close" id="lightbox-close"><span class="visually-hidden">Zatvori pregled</span><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <img class="lightbox__img" id="lightbox-img" alt="" width="1122" height="1402">
+    <figcaption id="lightbox-cap"></figcaption>
+  </figure>
+</dialog>
+
+<!-- PONUDA -->
+<section class="section" id="ponuda" aria-labelledby="ponuda-naslov">
+  <div class="container offer">
+    <div class="offer__intro" data-reveal>
+      <p class="eyebrow">Ponuda i poručivanje</p>
+      <h2 id="ponuda-naslov">Stalak po meri vašeg lokala</h2>
+      <p class="lead">Stalci nisu jedne, fiksne veličine. Postoji više vrsta, a pravu biramo zajedno sa vama, prema vašem prostoru i ponudi.</p>
+
+      <div class="pick">
+        <span class="pick__badge">Naš predlog</span>
+        <div class="pick__size" aria-hidden="true">
+          <span class="pick__sheet"><b>A6</b><small>105 × 148 mm</small></span>
+        </div>
+        <div>
+          <h3>A6 stalak</h3>
+          <p>Od svih veličina pokazao se kao najpraktičniji. Dovoljno je velik da ga gost odmah primeti, a dovoljno mali da stane na svaki pult, šank ili sto.</p>
+        </div>
+      </div>
+
+      <div class="offer__kit">
+        <h3>Šta čini jedan stalak</h3>
+        <ul>
+          <li>Tanak, providan akrilni držač sa blagim nagibom i ravnom stopom</li>
+          <li>Štampani umetak koji dizajniramo u bojama i stilu vašeg lokala</li>
+          <li>NFC tag podešen na stranicu za recenzije vašeg lokala i proveren na telefonu pre isporuke</li>
+        </ul>
+        <p class="muted">Dodatne komade, više lokacija ili QR opciju dogovaramo u ponudi. Cenu i rok šaljemo nakon upita.</p>
+      </div>
+
+    </div>
+    <div class="offer__side">
+    <div class="offer__flow" data-reveal style="--d:120ms">
+      <h3>Kako teče poručivanje</h3>
+      <ol class="flow">
+        <li style="--i:0">Popunite kratak upit</li>
+        <li style="--i:1">Javljamo vam se i dogovaramo količinu i dizajn</li>
+        <li style="--i:2">Potvrđujemo cenu i rok</li>
+        <li style="--i:3">Odobravate izgled umetka</li>
+        <li style="--i:4">Pripremamo, testiramo i isporučujemo</li>
+      </ol>
+    </div>
+      <div class="easy" data-reveal style="--d:200ms">
+        <span class="easy__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.5l4 4 8-9" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <p><b>Ne morate ništa da pripremate.</b> Ne treba da nam šaljete link za recenzije ni gotov dizajn. Dovoljno je da popunite kratak upit, a sve ostalo preuzimamo mi.</p>
+      </div>
+
+      <a href="#kontakt" class="btn btn--primary btn--lg btn--block" data-reveal style="--d:260ms">Popunite upit
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CESTA PITANJA -->
+<section class="section section--deep" id="pitanja" aria-labelledby="faq-naslov">
+  <div class="container faq-wrap">
+    <div class="section__head section__head--left" data-reveal>
+      <p class="eyebrow">Česta pitanja</p>
+      <h2 id="faq-naslov">Pre nego što poručite</h2>
+    </div>
+    <div class="faq" data-reveal>
+      <details class="faq__item"><summary><h3>Da li treba posebna aplikacija?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Ne. Telefoni sa NFC-om otvaraju link sami, čim se prislone uz stalak. Na nekim modelima gost samo dodirne obaveštenje koje se pojavi.</p></details>
+      <details class="faq__item"><summary><h3>Šta ako gost nema NFC na telefonu?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Za takve slučajeve na istu pločicu dodajemo i mali QR kod. Gost ga skenira kamerom telefona i otvara istu stranicu za recenziju. Ako telefon ne podržava NFC, QR je tu.</p></details>
+      <details class="faq__item"><summary><h3>Šta ako telefon ne očita stalak?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>To se retko dešava. Ako telefon ne reaguje, najčešće je NFC isključen u podešavanjima i dovoljno ga je uključiti. Za svaki slučaj, na stalak može da se doda i QR kod.</p></details>
+      <details class="faq__item"><summary><h3>Da li je dizajn prilagođen mom lokalu?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Da. Svaki stalak dizajniramo posebno za vaš lokal, u vašim bojama, sa vašim logom i u stilu vašeg brenda. NFC čip može i da se reprogramira: kasnije možemo da zamenimo link ili dodamo novu funkciju, bez novog stalka.</p></details>
+      <details class="faq__item"><summary><h3>Mogu li poručiti za više lokacija?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Da. U upitu označite kategoriju „Veći objekat ili više lokacija“ i u napomeni navedite koliko lokacija imate. Svaki stalak povezujemo sa Google profilom svoje lokacije.</p></details>
+      <details class="faq__item"><summary><h3>Može li link da se promeni kasnije?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Da. Čip se reprogramira, pa link ili funkciju menjamo bez pravljenja novog stalka. Javite nam se i dogovorićemo izmenu.</p></details>
+      <details class="faq__item"><summary><h3>Koliko košta i kada stiže?</h3><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><p>Cena i rok zavise od količine stalaka i dogovora sa vama. Popunite kratak upit i javićemo vam se sa svim informacijama.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="section contact" id="kontakt" aria-labelledby="kontakt-naslov">
+  <div class="container contact__inner">
+    <div class="contact__intro" data-reveal>
+      <p class="eyebrow">Kontakt</p>
+      <h2 id="kontakt-naslov">Kako bi tapGo izgledao na vašem pultu?</h2>
+      <p>Popunite kratak upit. Stiže direktno nama, a mi vam se javljamo sa predlogom dizajna, cenom i rokom.</p>
+      <ol class="contact__steps">
+        <li>Upišite osnovne podatke o lokalu</li>
+        <li>Označite kategoriju kojoj pripadate</li>
+        <li>Pošaljite, a ostalo je na nama</li>
+      </ol>
+      <div class="contact__alt">
+        <p>Imate dodatna pitanja ili želite da se dogovorimo direktno? Pišite nam:</p>
+        <ul class="contact__direct" id="contact-direct">
+          <li><span>Email</span><a href="mailto:tapgo.office@gmail.com">tapgo.office@gmail.com</a></li>
+          <li><span>Instagram</span><a href="https://www.instagram.com/tapgo.rs/" target="_blank" rel="noopener noreferrer">@tapgo.rs</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contact__card" data-reveal style="--d:120ms">
+      <form class="form" id="upit" name="upit" novalidate>
+        <h3 class="form__title">Upit za tapGo stalak</h3>
+        <p class="hp" aria-hidden="true"><label>Ne popunjavati <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
+
+        <div class="form__grid">
+          <div class="field"><label for="f-ime">Ime</label><input id="f-ime" name="ime" autocomplete="name" maxlength="80" aria-describedby="f-ime-err"><p class="field__error" id="f-ime-err" hidden></p></div>
+          <div class="field"><label for="f-lokal">Naziv lokala</label><input id="f-lokal" name="lokal" autocomplete="organization" maxlength="120" aria-describedby="f-lokal-err"><p class="field__error" id="f-lokal-err" hidden></p></div>
+        </div>
+
+        <fieldset class="form__group">
+          <legend>Kontakt</legend>
+          <p class="field__hint" id="kontakt-hint">Unesite email ili telefon, barem jedno.</p>
+          <div class="form__grid">
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" maxlength="160" aria-describedby="kontakt-hint f-email-err"><p class="field__error" id="f-email-err" hidden></p></div>
+            <div class="field"><label for="f-telefon">Telefon</label><input id="f-telefon" name="telefon" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" aria-describedby="kontakt-hint f-telefon-err"><p class="field__error" id="f-telefon-err" hidden></p></div>
+          </div>
+          <p class="field__error" id="f-kontakt-err" hidden></p>
+        </fieldset>
+
+        <div class="field"><label for="f-grad">Grad</label><input id="f-grad" name="grad" autocomplete="address-level2" maxlength="80" aria-describedby="f-grad-err"><p class="field__error" id="f-grad-err" hidden></p></div>
+
+        <fieldset class="form__group" id="f-kategorija" aria-describedby="kategorija-hint f-kategorija-err">
+          <legend>Kojoj kategoriji pripadate?</legend>
+          <p class="field__hint" id="kategorija-hint">Prema tome vam predlažemo broj stalaka i njihov raspored.</p>
+          <div class="cats">
+            <label class="cat">
+              <input type="radio" name="kategorija" value="Mali lokal (obično 1 stalak)">
+              <span class="cat__box">
+                <span class="cat__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10h16l-1.5-5h-13zM5 10v9h14v-9M9 19v-5h6v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+                <span class="cat__title">Mali lokal</span>
+                <span class="cat__desc">Frizerski ili beauty salon, fast food, pekara, radnja</span>
+                <span class="cat__tag">obično 1 stalak</span>
+              </span>
+            </label>
+            <label class="cat">
+              <input type="radio" name="kategorija" value="Kafić ili restoran (više stalaka)">
+              <span class="cat__box">
+                <span class="cat__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M11 3v3M14 3v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="cat__title">Kafić ili restoran</span>
+                <span class="cat__desc">Pult ili šank i stolovi za goste</span>
+                <span class="cat__tag">više stalaka</span>
+              </span>
+            </label>
+            <label class="cat">
+              <input type="radio" name="kategorija" value="Veći objekat ili više lokacija">
+              <span class="cat__box">
+                <span class="cat__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21V8l6-4v17M9 21V10l6-3v14M15 21V11l6 2v8M2 21h20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+                <span class="cat__title">Veći objekat ili više lokacija</span>
+                <span class="cat__desc">Hotel, smeštaj, restoran sa više sala, lanac lokala</span>
+                <span class="cat__tag">veća količina</span>
+              </span>
+            </label>
+            <label class="cat">
+              <input type="radio" name="kategorija" value="Nisam siguran/na, treba mi savet">
+              <span class="cat__box">
+                <span class="cat__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+                <span class="cat__title">Nisam siguran/na</span>
+                <span class="cat__desc">Pomoći ćemo vam da procenite koliko vam treba</span>
+                <span class="cat__tag">savetujemo vas</span>
+              </span>
+            </label>
+          </div>
+          <p class="field__error" id="f-kategorija-err" hidden></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="f-napomena">Napomena <span class="field__opt">(opciono)</span></label>
+          <textarea id="f-napomena" name="napomena" rows="3" maxlength="1500" placeholder="Npr. broj lokacija, posebne želje za dizajn…" aria-describedby="f-napomena-err"></textarea>
+          <p class="field__error" id="f-napomena-err" hidden></p>
+        </div>
+
+        <div class="form-error" id="form-error" role="alert" tabindex="-1" hidden>
+          <p><strong>Upit trenutno nije poslat.</strong> Vaš unos je sačuvan, pa možete pokušati ponovo.</p>
+          <p>Ili nam pošaljite isti upit emailom na <strong>tapgo.office@gmail.com</strong>:</p>
+          <div class="form-error__actions">
+            <a class="btn btn--outline btn--sm" id="mail-fallback" href="mailto:tapgo.office@gmail.com">Otvori email</a>
+            <button type="button" class="btn btn--outline btn--sm" id="copy-fallback">Kopiraj upit</button>
+          </div>
+          <p class="form-error__copied" id="copied-msg" role="status"></p>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg btn--block" id="submit-btn">Pošaljite upit</button>
+      </form>
+
+      <div class="form-success" id="form-success" role="status" tabindex="-1" hidden>
+        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#009F83"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Upit je poslat. Javićemo vam se na kontakt koji ste naveli.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer__glow" aria-hidden="true"></div>
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <span class="logo">tap<span class="logo__accent">Go</span></span>
+      <p class="footer__slogan">Prisloni. Poveži. Pokreni.</p>
+      <p class="footer__about">Personalizovani NFC stalci koji gostima olakšavaju da ostave Google recenziju. Za kafiće, restorane, salone i druge lokale.</p>
+      <a href="#kontakt" class="btn btn--primary btn--sm">Zatražite ponudu</a>
+    </div>
+    <nav class="footer__col" aria-label="Linkovi u podnožju">
+      <h2 class="footer__h">Sajt</h2>
+      <ul>
+        <li><a href="#kako-radi">Kako radi</a></li>
+        <li><a href="#prednosti">Prednosti</a></li>
+        <li><a href="#nfc-qr">NFC ili QR</a></li>
+        <li><a href="#primeri">Primeri</a></li>
+        <li><a href="#pitanja">Česta pitanja</a></li>
+      </ul>
+    </nav>
+    <div class="footer__col">
+      <h2 class="footer__h">Kontakt</h2>
+      <ul id="footer-links">
+        <li><a class="footer__contact" href="mailto:tapgo.office@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>tapgo.office@gmail.com</a></li>
+        <li><a class="footer__contact" href="https://www.instagram.com/tapgo.rs/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>@tapgo.rs</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__legal">
+    <p>© <span id="godina">2026</span> tapGo · NFC stalci za Google recenzije</p>
+    <a href="#vrh" class="footer__top">Na vrh <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  <div class="footer__mark" aria-hidden="true">tapGo</div>
+</footer>
+
+<script>
+{
+  /* =========================================================
+     PODEŠAVANJA — menjaju se samo ovde
+     ========================================================= */
+  const CONFIG = {
+    email: "tapgo.office@gmail.com",
+    // Javni telefon: upišite broj kada ga potvrdite, npr. "+381 65 920 5869".
+    // Dok je prazno, telefon se ne prikazuje na sajtu.
+    telefon: "",
+    // Adresa na koju se šalju upiti iz forme (FormSubmit).
+    // Posle aktivacije FormSubmit pošalje i "nasumičan" kod umesto emaila;
+    // može se upisati ovde umesto adrese, npr. "https://formsubmit.co/ajax/a1b2c3..."
+    formEndpoint: "https://formsubmit.co/ajax/tapgo.office@gmail.com",
+  };
+
+  document.getElementById("godina").textContent = new Date().getFullYear();
+
+  // Telefon (prikazuje se samo ako je upisan)
+  if (CONFIG.telefon) {
+    const tel = CONFIG.telefon.replace(/[^\d+]/g, "");
+    const li = document.createElement("li");
+    li.innerHTML = '<span>Telefon</span><a href="tel:' + tel + '"></a>';
+    li.querySelector("a").textContent = CONFIG.telefon;
+    document.getElementById("contact-direct").appendChild(li);
+    const li2 = document.createElement("li");
+    li2.innerHTML = '<a class="footer__contact" href="tel:' + tel + '"></a>';
+    li2.querySelector("a").textContent = CONFIG.telefon;
+    document.getElementById("footer-links").appendChild(li2);
+  }
+
+  /* ---------- Mobilni meni ---------- */
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobilni-meni");
+  const icon = document.getElementById("menu-icon");
+  const label = document.getElementById("menu-label");
+  function setMenu(open, returnFocus) {
+    menu.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    label.textContent = open ? "Zatvori meni" : "Otvori meni";
+    icon.setAttribute("d", open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16");
+    if (open) menu.querySelector("a").focus();
+    else if (returnFocus) toggle.focus();
+  }
+  toggle.addEventListener("click", () => setMenu(menu.hidden, false));
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false, false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu.hidden) setMenu(false, true);
+  });
+  window.addEventListener("resize", () => {
+    if (!menu.hidden && window.matchMedia("(min-width: 1080px)").matches) setMenu(false, false);
+  });
+
+  /* ---------- Pojavljivanje pri skrolovanju ---------- */
+  const revealEls = document.querySelectorAll("[data-reveal]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealEls.forEach((el) => el.classList.add("is-in"));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    revealEls.forEach((el) => io.observe(el));
+  }
+
+  /* ---------- Pregled slika ---------- */
+  const dlg = document.getElementById("lightbox");
+  const dlgImg = document.getElementById("lightbox-img");
+  let lastTrigger = null;
+  document.querySelectorAll("[data-preview]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      lastTrigger = btn;
+      dlgImg.src = btn.dataset.src;
+      dlgImg.alt = btn.dataset.alt;
+      dlgImg.width = +btn.dataset.w;
+      dlgImg.height = +btn.dataset.h;
+      document.getElementById("lightbox-naslov").textContent = btn.dataset.title;
+      document.getElementById("lightbox-cap").textContent = btn.dataset.caption + ". Ilustrativni prikaz personalizacije.";
+      if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+      document.getElementById("lightbox-close").focus();
+    });
+  });
+  function closeDlg() { if (dlg.open) { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); } }
+  document.getElementById("lightbox-close").addEventListener("click", closeDlg);
+  dlg.addEventListener("click", (e) => { if (e.target === dlg) closeDlg(); });
+  dlg.addEventListener("close", () => { if (lastTrigger) lastTrigger.focus(); });
+
+
+
+  /* ---------- Demo: kako radi ---------- */
+  {
+    const demo = document.getElementById("demo");
+    const btns = Array.from(demo.querySelectorAll("[data-go]"));
+    const STEP_MS = 3200;
+    demo.style.setProperty("--step-ms", STEP_MS + "ms");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let step = 1, timer = null, visible = false, userStopped = reduceMotion;
+
+    function show(n) {
+      step = n;
+      demo.dataset.step = String(n);
+      btns.forEach((b) => {
+        if (+b.dataset.go === n) b.setAttribute("aria-current", "step");
+        else b.removeAttribute("aria-current");
+        // restart progress bar animation
+        const bar = b.querySelector(".ds__bar"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
+      });
+    }
+    function play() {
+      clearInterval(timer);
+      if (userStopped || !visible || document.hidden) { demo.classList.remove("is-playing"); return; }
+      demo.classList.add("is-playing");
+      timer = setInterval(() => show(step % 4 + 1), STEP_MS);
+    }
+    btns.forEach((b) => b.addEventListener("click", () => {
+      show(+b.dataset.go);
+      play();
+    }));
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((en) => { visible = en[0].isIntersecting; if (visible) show(step); play(); }, { threshold: 0.35 }).observe(demo);
+    } else { visible = true; play(); }
+    document.addEventListener("visibilitychange", play);
+    show(1);
+  }
+
+  /* ---------- Karusel primera ---------- */
+  {
+    const track = document.getElementById("car-track");
+    const cards = Array.from(track.children);
+    const dotsBox = document.getElementById("car-dots");
+    const pauseBtn = document.getElementById("car-pause");
+    const pauseIcon = document.getElementById("car-pause-icon");
+    const pauseLabel = document.getElementById("car-pause-label");
+    const INTERVAL = 4000;
+    let userPaused = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let hoverPaused = false;
+    let timer = null;
+
+    const step = () => cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+    const visible = () => Math.max(1, Math.round(track.clientWidth / step()));
+    const pages = () => Math.max(1, cards.length - visible() + 1);
+    const current = () => Math.min(pages() - 1, Math.round(track.scrollLeft / step()));
+    const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+
+    function goTo(i) { track.scrollTo({ left: i * step() }); }
+    function next() { atEnd() ? goTo(0) : goTo(current() + 1); }
+    function prev() { track.scrollLeft <= 4 ? goTo(pages() - 1) : goTo(current() - 1); }
+
+    function buildDots() {
+      dotsBox.innerHTML = "";
+      for (let i = 0; i < pages(); i++) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "carousel__dot";
+        b.setAttribute("aria-label", "Primer " + (i + 1));
+        b.addEventListener("click", () => { goTo(i); restart(); });
+        dotsBox.appendChild(b);
+      }
+      markDots();
+    }
+    function markDots() {
+      const c = atEnd() ? pages() - 1 : current();
+      Array.from(dotsBox.children).forEach((d, i) => d.setAttribute("aria-current", String(i === c)));
+    }
+
+    function stop() { clearInterval(timer); timer = null; }
+    function start() { stop(); if (!userPaused && !hoverPaused && !document.hidden) timer = setInterval(next, INTERVAL); }
+    function restart() { start(); }
+
+    function renderPause() {
+      pauseBtn.setAttribute("aria-pressed", String(userPaused));
+      pauseLabel.textContent = userPaused ? "Pokreni" : "Pauziraj";
+      pauseIcon.setAttribute("d", userPaused ? "M8 5l11 7-11 7z" : "M8 5v14M16 5v14");
+      pauseIcon.setAttribute("fill", userPaused ? "currentColor" : "none");
+    }
+
+    document.getElementById("car-next").addEventListener("click", () => { next(); restart(); });
+    document.getElementById("car-prev").addEventListener("click", () => { prev(); restart(); });
+    pauseBtn.addEventListener("click", () => { userPaused = !userPaused; renderPause(); start(); });
+
+    const carousel = track.closest(".carousel");
+    carousel.addEventListener("mouseenter", () => { hoverPaused = true; stop(); });
+    carousel.addEventListener("mouseleave", () => { hoverPaused = false; start(); });
+    carousel.addEventListener("focusin", () => { hoverPaused = true; stop(); });
+    carousel.addEventListener("focusout", (e) => { if (!carousel.contains(e.relatedTarget)) { hoverPaused = false; start(); } });
+    // prevlačenje prstom: pauza dok korisnik pomera, pa nastavak
+    let touchTimer = null;
+    track.addEventListener("touchstart", () => { stop(); clearTimeout(touchTimer); }, { passive: true });
+    track.addEventListener("touchend", () => { touchTimer = setTimeout(start, 3000); }, { passive: true });
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    });
+
+    let scrollRaf = 0;
+    track.addEventListener("scroll", () => { cancelAnimationFrame(scrollRaf); scrollRaf = requestAnimationFrame(markDots); }, { passive: true });
+    let rTimer = null;
+    window.addEventListener("resize", () => { clearTimeout(rTimer); rTimer = setTimeout(buildDots, 150); });
+    document.addEventListener("visibilitychange", start);
+    // pokreni tek kada je karusel na ekranu
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((en) => { en[0].isIntersecting ? start() : stop(); }, { threshold: 0.3 }).observe(carousel);
+    } else start();
+
+    buildDots();
+    renderPause();
+  }
+
+  /* ---------- Forma za upit ---------- */
+  // Upit se šalje preko FormSubmit-a direktno na CONFIG.email.
+  // Prvi put: pošaljite jedan probni upit i potvrdite link koji FormSubmit pošalje na taj email.
+  const form = document.getElementById("upit");
+  const errBox = document.getElementById("form-error");
+  const okBox = document.getElementById("form-success");
+  const submitBtn = document.getElementById("submit-btn");
+  const startedAt = Date.now();
+  const v = (n) => (form.elements[n] && typeof form.elements[n].value === "string" ? form.elements[n].value.trim() : "");
+  const kategorija = () => { const c = form.querySelector('input[name="kategorija"]:checked'); return c ? c.value : ""; };
+
+  function validate() {
+    const e = {};
+    if (!v("ime")) e.ime = "Unesite ime.";
+    if (!v("lokal")) e.lokal = "Unesite naziv lokala.";
+    const email = v("email"), tel = v("telefon");
+    if (!email && !tel) e.kontakt = "Unesite email ili telefon, barem jedno.";
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) e.email = "Unesite ispravnu email adresu.";
+    if (tel && (!/^[+()\d\s\-/.]{6,30}$/.test(tel) || tel.replace(/\D/g, "").length < 6)) e.telefon = "Unesite ispravan broj telefona.";
+    if (!v("grad")) e.grad = "Unesite grad.";
+    if (!kategorija()) e.kategorija = "Označite kategoriju kojoj pripadate.";
+    if (v("napomena").length > 1500) e.napomena = "Napomena može imati najviše 1500 karaktera.";
+    return e;
+  }
+
+  const fields = ["ime", "lokal", "kontakt", "email", "telefon", "grad", "kategorija", "napomena"];
+  function showErrors(e) {
+    fields.forEach((f) => {
+      const p = document.getElementById("f-" + f + "-err");
+      const msg = e[f] || "";
+      p.textContent = msg; p.hidden = !msg;
+      const input = document.getElementById("f-" + f);
+      if (input && input.matches("input, textarea")) {
+        const bad = !!msg || ((f === "email" || f === "telefon") && !!e.kontakt);
+        input.closest(".field").classList.toggle("field--error", bad);
+        if (bad) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+      }
+    });
+    document.getElementById("f-kategorija").classList.toggle("cats--error", !!e.kategorija);
+    const first = fields.find((f) => e[f]);
+    if (!first) return;
+    if (first === "kategorija") form.querySelector('input[name="kategorija"]').focus();
+    else document.getElementById(first === "kontakt" ? "f-email" : "f-" + first).focus();
+  }
+
+  form.addEventListener("input", (ev) => {
+    const name = ev.target.name;
+    if (!name) return;
+    if (name === "kategorija") {
+      document.getElementById("f-kategorija-err").hidden = true;
+      document.getElementById("f-kategorija").classList.remove("cats--error");
+      return;
+    }
+    const p = document.getElementById("f-" + name + "-err");
+    if (p && !p.hidden) { p.hidden = true; ev.target.closest(".field").classList.remove("field--error"); ev.target.removeAttribute("aria-invalid"); }
+    if (name === "email" || name === "telefon") {
+      const kp = document.getElementById("f-kontakt-err");
+      if (!kp.hidden) { kp.hidden = true; ["email", "telefon"].forEach((f) => { const i = document.getElementById("f-" + f); i.closest(".field").classList.remove("field--error"); i.removeAttribute("aria-invalid"); }); }
+    }
+  });
+
+  function summary() {
+    return [
+      "Upit za tapGo stalak",
+      "",
+      "Ime: " + v("ime"),
+      "Naziv lokala: " + v("lokal"),
+      "Email: " + (v("email") || "—"),
+      "Telefon: " + (v("telefon") || "—"),
+      "Grad: " + v("grad"),
+      "Kategorija: " + (kategorija() || "—"),
+      "Napomena: " + (v("napomena") || "—"),
+    ].join("\n");
+  }
+
+  function showFailure() {
+    document.getElementById("mail-fallback").href =
+      "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Upit za tapGo stalak – " + v("lokal")) +
+      "&body=" + encodeURIComponent(summary());
+    document.getElementById("copied-msg").textContent = "";
+    errBox.hidden = false;
+    errBox.focus();
+  }
+
+  document.getElementById("copy-fallback").addEventListener("click", async () => {
+    const msg = document.getElementById("copied-msg");
+    try { await navigator.clipboard.writeText(summary()); msg.textContent = "Upit je kopiran. Nalepite ga u email ili Instagram poruku."; }
+    catch (e) { msg.textContent = "Kopiranje nije uspelo. Prepišite podatke u email."; }
+  });
+
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    errBox.hidden = true;
+    const e = validate();
+    showErrors(e);
+    if (Object.keys(e).length) return;
+
+    // Zaštita od spama: skriveno polje i minimalno vreme popunjavanja
+    if (form.elements._honey.value || Date.now() - startedAt < 3000) { showFailure(); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Šaljemo upit…";
+    const payload = {
+      "Ime": v("ime"),
+      "Naziv lokala": v("lokal"),
+      "Email": v("email") || "—",
+      "Telefon": v("telefon") || "—",
+      "Grad": v("grad"),
+      "Kategorija": kategorija(),
+      "Napomena": v("napomena") || "—",
+      _subject: "Novi upit za tapGo: " + v("lokal") + " (" + v("grad") + ")",
+      _template: "table",
+      _captcha: "false",
+      _honey: "",
+    };
+    if (v("email")) payload._replyto = v("email");
+    try {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 15000);
+      const res = await fetch(CONFIG.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(t);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !(json.success === true || json.success === "true")) throw new Error(json.message || "HTTP " + res.status);
+      form.hidden = true;
+      okBox.hidden = false;
+      okBox.focus();
+    } catch (err) {
+      showFailure();
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Pošaljite upit";
+    }
+  });
+}
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Da li treba posebna aplikacija?", "acceptedAnswer": {"@type": "Answer", "text": "Ne. Telefoni sa NFC-om otvaraju link sami, čim se prislone uz stalak. Na nekim modelima gost samo dodirne obaveštenje koje se pojavi."}}, {"@type": "Question", "name": "Šta ako gost nema NFC na telefonu?", "acceptedAnswer": {"@type": "Answer", "text": "Za takve slučajeve na istu pločicu dodajemo i mali QR kod. Gost ga skenira kamerom telefona i otvara istu stranicu za recenziju. Ako telefon ne podržava NFC, QR je tu."}}, {"@type": "Question", "name": "Šta ako telefon ne očita stalak?", "acceptedAnswer": {"@type": "Answer", "text": "To se retko dešava. Ako telefon ne reaguje, najčešće je NFC isključen u podešavanjima i dovoljno ga je uključiti. Za svaki slučaj, na stalak može da se doda i QR kod."}}, {"@type": "Question", "name": "Da li je dizajn prilagođen mom lokalu?", "acceptedAnswer": {"@type": "Answer", "text": "Da. Svaki stalak dizajniramo posebno za vaš lokal, u vašim bojama, sa vašim logom i u stilu vašeg brenda. NFC čip može i da se reprogramira: kasnije možemo da zamenimo link ili dodamo novu funkciju, bez novog stalka."}}, {"@type": "Question", "name": "Mogu li poručiti za više lokacija?", "acceptedAnswer": {"@type": "Answer", "text": "Da. U upitu označite kategoriju „Veći objekat ili više lokacija“ i u napomeni navedite koliko lokacija imate. Svaki stalak povezujemo sa Google profilom svoje lokacije."}}, {"@type": "Question", "name": "Može li link da se promeni kasnije?", "acceptedAnswer": {"@type": "Answer", "text": "Da. Čip se reprogramira, pa link ili funkciju menjamo bez pravljenja novog stalka. Javite nam se i dogovorićemo izmenu."}}, {"@type": "Question", "name": "Koliko košta i kada stiže?", "acceptedAnswer": {"@type": "Answer", "text": "Cena i rok zavise od količine stalaka i dogovora sa vama. Popunite kratak upit i javićemo vam se sa svim informacijama."}}]}</script>
+</body>
+</html>
